@@ -257,13 +257,19 @@ static void hfclkaudio_set(uint16_t freq_value)
 
 static void drift_comp_state_set(enum drift_comp_state new_state)
 {
-	if (new_state == ctrl_blk.drift_comp.state) {
+	enum drift_comp_state old_state = ctrl_blk.drift_comp.state;
+
+	if (new_state == old_state) {
 		LOG_WRN("Trying to change to the same drift compensation state");
 		return;
 	}
 
 	ctrl_blk.drift_comp.state = new_state;
-	LOG_INF("Drft comp state: %s", drift_comp_state_names[new_state]);
+	if ((new_state == DRIFT_STATE_LOCKED) || (old_state == DRIFT_STATE_LOCKED)) {
+		LOG_INF("Drft comp state: %s", drift_comp_state_names[new_state]);
+	} else {
+		LOG_DBG("Drft comp state: %s", drift_comp_state_names[new_state]);
+	}
 }
 
 /**
@@ -373,14 +379,19 @@ static inline void audio_datapath_drift_compensation(uint32_t frame_start_ts_us)
 static void pres_comp_state_set(enum pres_comp_state new_state)
 {
 	int ret;
+	enum pres_comp_state old_state = ctrl_blk.pres_comp.state;
 
-	if (new_state == ctrl_blk.pres_comp.state) {
+	if (new_state == old_state) {
 		return;
 	}
 
 	ctrl_blk.pres_comp.state = new_state;
 	/* NOTE: The string below is used by the Nordic CI system */
-	LOG_INF("Pres comp state: %s", pres_comp_state_names[new_state]);
+	if ((new_state == PRES_STATE_LOCKED) || (old_state == PRES_STATE_LOCKED)) {
+		LOG_INF("Pres comp state: %s", pres_comp_state_names[new_state]);
+	} else {
+		LOG_DBG("Pres comp state: %s", pres_comp_state_names[new_state]);
+	}
 	if (new_state == PRES_STATE_LOCKED) {
 		ret = led_on(LED_AUDIO_SYNC_STATUS);
 	} else {
@@ -950,11 +961,11 @@ void audio_datapath_stream_out(struct net_buf *audio_frame_in)
 
 	} else if (sdu_ref_delta_us > CONSECUTIVE_TS_LIMIT_US) {
 		/* If the new timestamp is not consecutive wrt. the previous timestamp */
-		if (consec_invalid_ts_deltas) {
-			LOG_ERR("sdu_ref_us not from consecutive frames (delta: %d us)",
-				sdu_ref_delta_us);
-		} else {
+		if (consec_invalid_ts_deltas == 0) {
 			LOG_DBG("sdu_ref_us not from consecutive frames (delta: %d us)",
+				sdu_ref_delta_us);
+		} else if ((consec_invalid_ts_deltas % 200) == 0) {
+			LOG_WRN("sdu_ref_us not from consecutive frames (delta: %d us)",
 				sdu_ref_delta_us);
 		}
 

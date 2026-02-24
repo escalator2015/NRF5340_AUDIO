@@ -77,7 +77,6 @@ static void button_msg_sub_thread(void)
 {
 	int ret;
 	const struct zbus_channel *chan;
-	bool broadcast_alt = true;
 
 	while (1) {
 		ret = zbus_sub_wait(&button_evt_sub, &chan, K_FOREVER);
@@ -150,17 +149,8 @@ static void button_msg_sub_thread(void)
 				break;
 			}
 
-			if (broadcast_alt) {
-				ret = bt_mgmt_scan_start(0, 0, BT_MGMT_SCAN_TYPE_BROADCAST,
-							 CONFIG_BT_AUDIO_BROADCAST_NAME_ALT,
-							 BRDCAST_ID_NOT_USED);
-				broadcast_alt = false;
-			} else {
-				ret = bt_mgmt_scan_start(0, 0, BT_MGMT_SCAN_TYPE_BROADCAST,
-							 CONFIG_BT_AUDIO_BROADCAST_NAME,
-							 BRDCAST_ID_NOT_USED);
-				broadcast_alt = true;
-			}
+			ret = bt_mgmt_scan_start(0, 0, BT_MGMT_SCAN_TYPE_BROADCAST, NULL,
+						 BRDCAST_ID_NOT_USED);
 
 			if (ret) {
 				LOG_WRN("Failed to start scanning for broadcaster: %d", ret);
@@ -609,8 +599,8 @@ int main(void)
 		ret = bt_mgmt_adv_start(0, ext_adv_buf, ext_adv_buf_cnt, NULL, 0, true);
 		ERR_CHK(ret);
 	} else {
-		ret = bt_mgmt_scan_start(0, 0, BT_MGMT_SCAN_TYPE_BROADCAST,
-					 CONFIG_BT_AUDIO_BROADCAST_NAME, BRDCAST_ID_NOT_USED);
+		ret = bt_mgmt_scan_start(0, 0, BT_MGMT_SCAN_TYPE_BROADCAST, NULL,
+					 BRDCAST_ID_NOT_USED);
 		ERR_CHK_MSG(ret, "Failed to start scanning");
 	}
 

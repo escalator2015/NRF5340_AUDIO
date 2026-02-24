@@ -210,7 +210,8 @@ static void scan_recv_cb(const struct bt_le_scan_recv_info *info, struct net_buf
 			return;
 		}
 
-	} else if (strncmp(source.name, srch_name, BLE_SEARCH_NAME_MAX_LEN) != 0) {
+	} else if ((srch_name != NULL) && (srch_name[0] != '\0') &&
+		   (strncmp(source.name, srch_name, BLE_SEARCH_NAME_MAX_LEN) != 0)) {
 		/* Broadcaster does not match src_name */
 		return;
 	}

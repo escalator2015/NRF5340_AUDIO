@@ -1,0 +1,3 @@
+/home/aa/ncs/v3.2.2/nrf/subsys/nrf_security/src/zephyr/mbedtls_heap.c:23:6:_heap_init	8	static
+/home/aa/ncs/v3.2.2/nrf/subsys/nrf_security/src/zephyr/mbedtls_heap.c:40:12:mbedtls_heap_init	8	static
+/home/aa/ncs/v3.2.2/nrf/subsys/nrf_security/src/zephyr/mbedtls_heap.c:35:6:_heap_free	8	static

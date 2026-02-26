@@ -1,0 +1,13 @@
+/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/advertising/bt_mgmt_adv.c:53:13:bond_find	56	static
+/home/aa/ncs/v3.2.2/zephyr/include/zephyr/bluetooth/addr.h:242:19:bt_addr_le_to_str	64	static
+/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/advertising/bt_mgmt_adv.c:105:12:addr_print	152	dynamic,bounded
+/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/advertising/bt_mgmt_adv.c:151:12:direct_adv_create	64	static
+/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/advertising/bt_mgmt_adv.c:187:12:extended_adv_create	40	static
+/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/advertising/bt_mgmt_adv.c:233:13:advertising_process	24	static
+/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/advertising/bt_mgmt_adv.c:343:5:bt_mgmt_manufacturer_uuid_populate	16	static
+/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/advertising/bt_mgmt_adv.c:354:5:bt_mgmt_adv_buffer_put	0	static
+/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/advertising/bt_mgmt_adv.c:374:5:bt_mgmt_per_adv_stop	8	static
+/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/advertising/bt_mgmt_adv.c:387:5:bt_mgmt_ext_adv_stop	16	static
+/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/advertising/bt_mgmt_adv.c:406:5:bt_mgmt_adv_start	48	static
+/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/advertising/bt_mgmt_adv.c:309:6:bt_mgmt_dir_adv_timed_out	48	static
+/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/advertising/bt_mgmt_adv.c:476:6:bt_mgmt_adv_init	16	static

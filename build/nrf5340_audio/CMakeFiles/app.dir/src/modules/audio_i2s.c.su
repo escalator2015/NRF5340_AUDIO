@@ -1,0 +1,7 @@
+/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_i2s.c:67:13:i2s_comp_handler	16	static
+/home/aa/ncs/v3.2.2/zephyr/include/zephyr/drivers/pinctrl.h:345:19:pinctrl_apply_state	16	static
+/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_i2s.c:76:6:audio_i2s_set_next_buf	24	static
+/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_i2s.c:97:6:audio_i2s_start	24	static
+/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_i2s.c:121:6:audio_i2s_stop	8	static
+/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_i2s.c:130:6:audio_i2s_blk_comp_cb_register	0	static
+/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_i2s.c:135:6:audio_i2s_init	8	static

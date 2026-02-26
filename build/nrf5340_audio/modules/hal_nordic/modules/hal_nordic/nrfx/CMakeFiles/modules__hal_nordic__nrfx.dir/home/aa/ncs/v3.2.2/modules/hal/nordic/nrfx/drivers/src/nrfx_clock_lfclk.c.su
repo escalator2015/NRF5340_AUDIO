@@ -1,0 +1,9 @@
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_lfclk.c:151:26:clock_initial_lfclksrc_get	0	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_lfclk.c:137:13:clock_stop	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_lfclk.c:171:13:clock_lfclksrc_tweak	16	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_lfclk.c:188:5:nrfx_clock_lfclk_init	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_lfclk.c:211:6:nrfx_clock_lfclk_uninit	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_lfclk.c:220:6:nrfx_clock_lfclk_init_check	0	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_lfclk.c:225:6:nrfx_clock_lfclk_start	16	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_lfclk.c:286:6:nrfx_clock_lfclk_stop	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_lfclk.c:415:6:nrfx_clock_lfclk_irq_handler	8	static

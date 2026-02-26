@@ -1,0 +1,16 @@
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:164:13:encoder_thread	1160	dynamic,bounded
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:120:13:audio_headset_configure	16	static
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:80:6:sample_rate_valid	0	static
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:290:6:audio_system_encoder_start	8	static
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:296:6:audio_system_encoder_stop	8	static
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:301:5:audio_system_encode_test_tone_set	8	static
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:326:5:audio_system_encode_test_tone_step	8	static
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:359:5:audio_system_config_set	16	static
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:386:5:audio_system_decode	32	static
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:488:6:audio_system_start	104	dynamic,bounded
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:611:12:cmd_audio_system_start	8	static
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:529:6:audio_system_stop	104	dynamic,bounded
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:623:12:cmd_audio_system_stop	8	static
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:557:5:audio_system_fifo_rx_block_drop	16	static
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:575:5:audio_system_decoder_num_ch_get	0	static
+/home/aa/workspace-nordic/nrf5340_audio/src/audio/audio_system.c:580:5:audio_system_init	8	static

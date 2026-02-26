@@ -1,0 +1,2 @@
+/home/aa/ncs/v3.2.2/zephyr/drivers/adc/adc_common.c:38:5:adc_gain_invert	8	static
+/home/aa/ncs/v3.2.2/zephyr/drivers/adc/adc_common.c:54:5:adc_gain_invert_64	16	static

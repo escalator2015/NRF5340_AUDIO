@@ -1,0 +1,15 @@
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:154:31:bap_iso_get_iso_dir	0	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:236:13:is_unicast_client_ep	0	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:37:20:bt_bap_iso_new	8	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:57:20:bt_bap_iso_ref	8	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:115:13:bt_bap_iso_find_cb	16	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:79:6:bt_bap_iso_unref	8	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:90:6:bt_bap_iso_foreach	24	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:128:20:bt_bap_iso_find	24	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:141:6:bt_bap_iso_init	0	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:174:6:bt_bap_setup_iso_data_path	88	dynamic,bounded
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:214:6:bt_bap_remove_iso_data_path	64	dynamic,bounded
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:241:6:bt_bap_iso_bind_ep	16	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:260:6:bt_bap_iso_unbind_ep	16	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:281:19:bt_bap_iso_get_ep	16	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_iso.c:296:19:bt_bap_iso_get_paired_ep	0	static

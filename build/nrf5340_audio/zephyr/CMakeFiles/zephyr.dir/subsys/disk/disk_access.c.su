@@ -1,0 +1,8 @@
+/home/aa/ncs/v3.2.2/zephyr/subsys/disk/disk_access.c:27:19:disk_access_get_di	24	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/disk/disk_access.c:57:5:disk_access_init	8	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/disk/disk_access.c:80:5:disk_access_status	8	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/disk/disk_access.c:93:5:disk_access_read	24	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/disk/disk_access.c:107:5:disk_access_write	24	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/disk/disk_access.c:121:5:disk_access_ioctl	24	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/disk/disk_access.c:168:5:disk_access_register	16	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/disk/disk_access.c:193:5:disk_access_unregister	16	static

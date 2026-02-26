@@ -1,0 +1,15 @@
+/home/aa/ncs/v3.2.2/zephyr/lib/os/clock.c:30:13:is_valid_clock_id	0	static
+/home/aa/ncs/v3.2.2/zephyr/lib/os/clock.c:41:13:timespec_from_ticks	4	static
+/home/aa/ncs/v3.2.2/zephyr/include/zephyr/sys/timeutil.h:375:20:timespec_is_valid	8	static
+/home/aa/ncs/v3.2.2/zephyr/include/zephyr/sys/timeutil.h:418:20:timespec_normalize	16	static
+/home/aa/ncs/v3.2.2/zephyr/include/zephyr/sys/timeutil.h:510:20:timespec_add	16	static
+/home/aa/ncs/v3.2.2/zephyr/include/zephyr/sys/timeutil.h:553:20:timespec_negate	8	static
+/home/aa/ncs/v3.2.2/zephyr/include/zephyr/sys/timeutil.h:614:19:timespec_compare	24	static
+/home/aa/ncs/v3.2.2/zephyr/include/zephyr/sys/timeutil.h:665:20:timespec_from_timeout	8	static
+/home/aa/ncs/v3.2.2/zephyr/include/zephyr/sys/timeutil.h:592:20:timespec_sub	24	static
+/home/aa/ncs/v3.2.2/zephyr/include/zephyr/sys/timeutil.h:716:27:timespec_to_timeout	96	static
+/home/aa/ncs/v3.2.2/zephyr/lib/os/clock.c:53:5:sys_clock_from_clockid	0	static
+/home/aa/ncs/v3.2.2/zephyr/lib/os/clock.c:104:6:z_impl_sys_clock_getrtoffset	16	static
+/home/aa/ncs/v3.2.2/zephyr/lib/os/clock.c:69:5:sys_clock_gettime	32	static
+/home/aa/ncs/v3.2.2/zephyr/lib/os/clock.c:124:5:z_impl_sys_clock_settime	32	static
+/home/aa/ncs/v3.2.2/zephyr/lib/os/clock.c:156:5:z_impl_sys_clock_nanosleep	64	static

@@ -1,0 +1,5 @@
+/home/aa/ncs/v3.2.2/zephyr/subsys/shell/modules/date_service.c:19:13:date_print	24	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/shell/modules/date_service.c:185:12:cmd_date_get	64	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/shell/modules/date_service.c:32:12:get_y_m_d	32	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/shell/modules/date_service.c:81:12:get_h_m_s	24	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/shell/modules/date_service.c:135:12:cmd_date_set	72	static

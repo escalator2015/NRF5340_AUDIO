@@ -1,0 +1,17 @@
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:40:25:first	0	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:47:25:next	0	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:54:13:remove_timeout	8	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:84:16:next_timeout	8	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:179:18:timeout_rem	16	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:63:16:elapsed	8	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:99:11:z_add_timeout	48	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:158:5:z_abort_timeout	24	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:193:11:z_timeout_remaining	32	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:206:11:z_timeout_expires	24	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:220:9:z_get_next_timeout_expiry	16	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:230:6:sys_clock_announce	16	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:281:9:sys_clock_tick_get	24	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:291:10:sys_clock_tick_get_32	8	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:300:9:z_impl_k_uptime_ticks	8	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:313:15:sys_timepoint_calc	16	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/timeout.c:334:13:sys_timepoint_timeout	24	static

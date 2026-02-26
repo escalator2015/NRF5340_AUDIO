@@ -1,0 +1,9 @@
+/home/aa/ncs/v3.2.2/zephyr/arch/arm/core/cortex_m/thread.c:485:13:z_arm_prepare_switch_to_main	0	static
+/home/aa/ncs/v3.2.2/zephyr/arch/arm/core/cortex_m/thread.c:61:6:arch_new_thread	4	static
+/home/aa/ncs/v3.2.2/zephyr/arch/arm/core/cortex_m/thread.c:285:6:configure_builtin_stack_guard	0	static
+/home/aa/ncs/v3.2.2/zephyr/arch/arm/core/cortex_m/thread.c:431:5:arch_float_disable	0	static
+/home/aa/ncs/v3.2.2/zephyr/arch/arm/core/cortex_m/thread.c:463:5:arch_float_enable	0	static
+/home/aa/ncs/v3.2.2/zephyr/arch/arm/core/cortex_m/thread.c:472:5:arch_coprocessors_disable	8	static
+/home/aa/ncs/v3.2.2/zephyr/arch/arm/core/cortex_m/thread.c:509:6:arch_switch_to_main_thread	8	static
+/home/aa/ncs/v3.2.2/zephyr/arch/arm/core/cortex_m/thread.c:592:13:arch_irq_unlock_outlined	0	static
+/home/aa/ncs/v3.2.2/zephyr/arch/arm/core/cortex_m/thread.c:601:21:arch_irq_lock_outlined	0	static

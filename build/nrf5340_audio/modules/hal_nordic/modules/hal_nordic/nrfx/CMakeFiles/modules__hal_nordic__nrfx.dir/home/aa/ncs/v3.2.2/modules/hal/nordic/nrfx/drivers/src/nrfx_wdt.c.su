@@ -1,0 +1,15 @@
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/haly/nrfy_wdt.h:354:29:__nrfy_internal_wdt_events_process	0	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/haly/nrfy_wdt.h:99:25:nrfy_wdt_int_init	16	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_wdt.c:40:13:wdt_configure	32	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_wdt.c:79:12:wdt_init	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_wdt.c:123:5:nrfx_wdt_init	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_wdt.c:131:5:nrfx_wdt_reconfigure	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_wdt.c:160:6:nrfx_wdt_uninit	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_wdt.c:177:6:nrfx_wdt_init_check	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_wdt.c:186:6:nrfx_wdt_enable	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_wdt.c:198:6:nrfx_wdt_feed	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_wdt.c:210:5:nrfx_wdt_channel_alloc	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_wdt.c:237:6:nrfx_wdt_channels_free	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_wdt.c:256:6:nrfx_wdt_channel_feed	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_wdt.c:265:5:nrfx_wdt_stop	8	static
+/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_wdt.c:293:6:nrfx_wdt_irq_handler	16	static

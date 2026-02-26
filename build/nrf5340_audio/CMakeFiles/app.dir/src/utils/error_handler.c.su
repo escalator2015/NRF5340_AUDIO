@@ -1,0 +1,6 @@
+/home/aa/workspace-nordic/nrf5340_audio/src/utils/error_handler.c:74:6:assert_post_action	64	dynamic,bounded
+/home/aa/ncs/v3.2.2/zephyr/include/zephyr/drivers/gpio.h:998:19:z_impl_gpio_pin_configure	24	static
+/home/aa/ncs/v3.2.2/zephyr/include/zephyr/drivers/gpio.h:1066:19:gpio_pin_configure_dt	8	static
+/home/aa/workspace-nordic/nrf5340_audio/src/utils/error_handler.c:38:6:error_handler	8	static
+/home/aa/workspace-nordic/nrf5340_audio/src/utils/error_handler.c:69:6:k_sys_fatal_error_handler	8	static
+/home/aa/workspace-nordic/nrf5340_audio/src/utils/error_handler.c:63:6:bt_ctlr_assert_handle	64	dynamic,bounded

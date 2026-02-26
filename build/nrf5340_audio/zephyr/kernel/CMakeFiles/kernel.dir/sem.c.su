@@ -1,0 +1,5 @@
+/home/aa/ncs/v3.2.2/zephyr/kernel/include/ksched.h:147:20:unpend_thread_no_timeout	8	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/sem.c:45:5:z_impl_k_sem_init	0	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/sem.c:95:6:z_impl_k_sem_give	24	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/sem.c:132:5:z_impl_k_sem_take	32	static
+/home/aa/ncs/v3.2.2/zephyr/kernel/sem.c:166:6:z_impl_k_sem_reset	24	static

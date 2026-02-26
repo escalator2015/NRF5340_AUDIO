@@ -1,0 +1,5 @@
+/home/aa/ncs/v3.2.2/zephyr/include/zephyr/sys/slist.h:406:1:sys_slist_remove	0	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/zbus/zbus_runtime_observers.c:12:19:_zbus_runtime_observer_node_alloc	8	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/zbus/zbus_runtime_observers.c:56:19:_zbus_runtime_take_chan_sem_and_obs_check	24	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/zbus/zbus_runtime_observers.c:129:5:zbus_chan_add_obs	48	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/zbus/zbus_runtime_observers.c:160:5:zbus_chan_rm_obs	24	static

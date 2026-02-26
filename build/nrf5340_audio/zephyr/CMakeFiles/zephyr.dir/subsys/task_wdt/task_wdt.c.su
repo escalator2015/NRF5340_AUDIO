@@ -1,0 +1,8 @@
+/home/aa/ncs/v3.2.2/zephyr/subsys/task_wdt/task_wdt.c:57:13:schedule_next_timeout	24	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/task_wdt/task_wdt.c:105:13:task_wdt_trigger	8	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/task_wdt/task_wdt.c:129:5:task_wdt_init	24	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/task_wdt/task_wdt.c:209:5:task_wdt_delete	16	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/task_wdt/task_wdt.c:226:5:task_wdt_feed	24	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/task_wdt/task_wdt.c:160:5:task_wdt_add	24	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/task_wdt/task_wdt.c:255:6:task_wdt_suspend	16	static
+/home/aa/ncs/v3.2.2/zephyr/subsys/task_wdt/task_wdt.c:287:6:task_wdt_resume	24	static

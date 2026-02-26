@@ -1,0 +1,11 @@
+// Script JLink para flashear Fanstel BT40NE (nRF5340) via DEBUG_OUT del nRF5340DK
+// Uso: JLinkExe -device nRF5340_xxAA -if SWD -speed 4000 -SelectEmuBySN 1050010876 -CommanderScript flash_bt40ne.jlink
+
+si 1
+speed 4000
+r
+erase
+loadfile build/merged.hex
+r
+g
+q

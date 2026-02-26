@@ -25,23 +25,16 @@
 		};
 	};
 
+	/* Minimal ramdisk required by FatFS (FF_VOLUMES >= 1).
+	 * 2 sectors x 512 bytes = 1024 bytes of RAM.
+	 * Not used functionally; satisfies the build constraint. */
 	ramdisk0: ramdisk0 {
 		compatible = "zephyr,ram-disk";
 		disk-name = "RAM";
 		sector-size = <512>;
-		sector-count = <80>;
+		sector-count = <2>;
 	};
 
-	hs_0: hs_0 {
-		compatible = "usb-audio-hs";
-		mic-feature-mute;
-		mic-channel-l;
-		mic-channel-r;
-
-		hp-feature-mute;
-		hp-channel-l;
-		hp-channel-r;
-	};
 };
 
 &pinctrl {

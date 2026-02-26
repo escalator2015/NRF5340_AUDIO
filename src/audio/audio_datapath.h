@@ -95,6 +95,17 @@ int audio_datapath_stop(void);
 int audio_datapath_init(void);
 
 /**
+ * @brief	Get I2S output statistics.
+ *
+ * @param	filled_blks	Pointer to store number of filled blocks in FIFO.
+ * @param	total_blks	Pointer to store total number of blocks in FIFO.
+ * @param	underruns	Pointer to store total number of underruns.
+ *
+ * @return	0 if successful, error otherwise.
+ */
+int audio_datapath_i2s_stats_get(uint32_t *filled_blks, uint32_t *total_blks, uint32_t *underruns);
+
+/**
  * @}
  */
 

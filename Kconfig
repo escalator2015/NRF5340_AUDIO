@@ -58,6 +58,11 @@ config PRINT_STACK_USAGE_MS
 	int "Print stack usage every x milliseconds"
 	default 5000
 
+config PRINT_HEAP_USAGE_MS
+	depends on SYS_HEAP_RUNTIME_STATS
+	int "Print heap usage every x milliseconds"
+	default 5000
+
 endmenu # Log levels
 
 #----------------------------------------------------------------------------#

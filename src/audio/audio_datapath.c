@@ -1129,6 +1129,27 @@ int audio_datapath_stop(void)
 	}
 }
 
+int audio_datapath_i2s_stats_get(uint32_t *filled_blks, uint32_t *total_blks, uint32_t *underruns)
+{
+	if (!ctrl_blk.datapath_initialized) {
+		return -ECANCELED;
+	}
+
+	if (filled_blks != NULL) {
+		*filled_blks = filled_blocks_get();
+	}
+
+	if (total_blks != NULL) {
+		*total_blks = FIFO_NUM_BLKS;
+	}
+
+	if (underruns != NULL) {
+		*underruns = ctrl_blk.out.total_blk_underruns;
+	}
+
+	return 0;
+}
+
 int audio_datapath_init(void)
 {
 	memset(&ctrl_blk, 0, sizeof(ctrl_blk));

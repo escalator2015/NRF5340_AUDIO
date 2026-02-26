@@ -1,0 +1,25 @@
+{
+    "version": 2,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 20
+    },
+    "configurePresets": [
+        {
+            "name": "build",
+            "displayName": "Build for nRF5340 DK nRF5340 application MCU",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "BOARD": "nrf5340dk/nrf5340/cpuapp",
+                "EXTRA_CONF_FILE": "broadcast_sink/overlay-broadcast_sink.conf",
+                "CONF_FILE": "prj.conf",
+                "EXTRA_DTC_OVERLAY_FILE": "boards/nrf5340dk_nrf5340_cpuapp.overlay",
+                "DTC_OVERLAY_FILE": "boards/nrf5340dk_nrf5340_cpuapp.overlay",
+                "DEBUG_THREAD_INFO": false,
+                "nrf5340_audio_DEBUG_THREAD_INFO": false,
+                "ipc_radio_DEBUG_THREAD_INFO": false
+            }
+        }
+    ]
+}

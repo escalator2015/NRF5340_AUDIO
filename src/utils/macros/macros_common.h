@@ -8,6 +8,8 @@
 #define _MACROS_H_
 
 #include <errno.h>
+#include <zephyr/sys/sys_heap.h>
+#include <zephyr/kernel.h>
 
 /* Error check. If != 0, print err code and call _SysFatalErrorHandler in main.
  * For debug mode all LEDs are turned on in case of an error.
@@ -50,6 +52,39 @@
 #else
 #define STACK_USAGE_PRINT(thread_name, p_stack)
 #endif /* (defined(CONFIG_INIT_STACKS) && defined(CONFIG_THREAD_ANALYZER)) */
+
+#if defined(CONFIG_SYS_HEAP_RUNTIME_STATS)
+
+/* Macro para imprimir estadísticas de un k_heap (heap de kernel) */
+#define HEAP_USAGE_PRINT(heap_name, kheap_ptr)                                                     \
+	do {                                                                                       \
+		static uint64_t heap_ts;                                                           \
+		struct sys_memory_stats stats;                                                     \
+		if (k_uptime_get() - heap_ts > CONFIG_PRINT_HEAP_USAGE_MS) {                       \
+			sys_heap_runtime_stats_get(&((kheap_ptr)->heap), &stats);                  \
+			heap_ts = k_uptime_get();                                                  \
+			LOG_DBG("Heap %s: free=%zu allocated=%zu max_alloc=%zu", heap_name,      \
+				stats.free_bytes, stats.allocated_bytes, stats.max_allocated_bytes); \
+		}                                                                                  \
+	} while (0)
+
+/* Macro para imprimir estadísticas del heap del sistema */
+#define SYSTEM_HEAP_USAGE_PRINT()                                                                  \
+	do {                                                                                       \
+		static uint64_t sys_heap_ts;                                                       \
+		struct sys_memory_stats stats;                                                     \
+		extern struct k_heap _system_heap;                                                 \
+		if (k_uptime_get() - sys_heap_ts > CONFIG_PRINT_HEAP_USAGE_MS) {                   \
+			sys_heap_runtime_stats_get(&_system_heap.heap, &stats);                    \
+			sys_heap_ts = k_uptime_get();                                              \
+			LOG_DBG("System heap: free=%zu allocated=%zu max_alloc=%zu",               \
+				stats.free_bytes, stats.allocated_bytes, stats.max_allocated_bytes); \
+		}                                                                                  \
+	} while (0)
+#else
+#define HEAP_USAGE_PRINT(heap_name, kheap_ptr)
+#define SYSTEM_HEAP_USAGE_PRINT()
+#endif /* defined(CONFIG_SYS_HEAP_RUNTIME_STATS) */
 
 #ifndef MIN
 #define MIN(a, b) (((a) < (b)) ? (a) : (b))

@@ -283,6 +283,7 @@ static void encoder_thread(void *arg1, void *arg2, void *arg3)
 			net_buf_unref(audio_frame_out);
 		}
 		STACK_USAGE_PRINT("encoder_thread", &encoder_thread_data);
+		SYSTEM_HEAP_USAGE_PRINT();
 	}
 }
 

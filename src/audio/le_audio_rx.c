@@ -21,6 +21,31 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(le_audio_rx, CONFIG_LE_AUDIO_RX_LOG_LEVEL);
 
+/**
+ * @brief Macro para imprimir estadísticas de I2S periódicamente.
+ *
+ * Imprime el número de bloques llenos en el FIFO de salida, el total de bloques
+ * y el número de underruns. Útil para monitorear el estado del buffer I2S.
+ *
+ * @param log_interval_ms Intervalo en ms entre logs (ej: 2000 para 2 segundos).
+ */
+#define I2S_STATS_PRINT(log_interval_ms)                                                           \
+	do {                                                                                       \
+		static uint64_t i2s_stats_ts;                                                      \
+		uint32_t filled_blks = 0;                                                          \
+		uint32_t total_blks = 0;                                                           \
+		uint32_t underruns = 0;                                                            \
+		if (k_uptime_get() - i2s_stats_ts > (log_interval_ms)) {                           \
+			if (audio_datapath_i2s_stats_get(&filled_blks, &total_blks, &underruns) == 0) { \
+				i2s_stats_ts = k_uptime_get();                                         \
+				LOG_INF("I2S OUT: %u/%u blks (%u%%), underruns: %u",                   \
+					filled_blks, total_blks,                                           \
+					(total_blks > 0) ? (filled_blks * 100 / total_blks) : 0,           \
+					underruns);                                                        \
+			}                                                                          \
+		}                                                                                  \
+	} while (0)
+
 struct rx_stats {
 	uint32_t recv_cnt;
 	uint32_t bad_frame_cnt;
@@ -267,6 +292,7 @@ static void audio_datapath_thread(void *dummy1, void *dummy2, void *dummy3)
 		net_buf_unref(audio_frame);
 
 		STACK_USAGE_PRINT("audio_datapath_thread", &audio_datapath_thread_data);
+		I2S_STATS_PRINT(5000);
 	}
 }
 

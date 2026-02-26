@@ -1,4 +1,0 @@
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_ecdsa.c:205:14:oberon_ecdsa_sign_hash	0	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_ecdsa.c:320:14:oberon_ecdsa_sign_message	0	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_ecdsa.c:379:14:oberon_ecdsa_verify_hash	0	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_ecdsa.c:528:14:oberon_ecdsa_verify_message	0	static

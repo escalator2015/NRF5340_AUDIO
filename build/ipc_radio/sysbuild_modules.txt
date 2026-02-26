@@ -1,2 +1,0 @@
-"nrf":"/home/aa/ncs/v3.2.2/nrf":"/home/aa/ncs/v3.2.2/nrf/sysbuild"
-"mcuboot":"/home/aa/ncs/v3.2.2/bootloader/mcuboot":"/home/aa/ncs/v3.2.2/bootloader/mcuboot/boot/zephyr/sysbuild"

@@ -1,8 +1,0 @@
-/home/aa/ncs/v3.2.2/zephyr/subsys/shell/modules/devmem_service.c:254:12:memory_read	8	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/shell/modules/devmem_service.c:282:12:memory_write	8	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/shell/modules/devmem_service.c:306:12:cmd_devmem	32	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/shell/modules/devmem_service.c:151:12:set_bypass	16	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/shell/modules/devmem_service.c:222:12:cmd_load	24	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/shell/modules/devmem_service.c:172:13:bypass_cb	24	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/shell/modules/devmem_service.c:43:12:memory_dump	48	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/shell/modules/devmem_service.c:97:12:cmd_dump	40	static

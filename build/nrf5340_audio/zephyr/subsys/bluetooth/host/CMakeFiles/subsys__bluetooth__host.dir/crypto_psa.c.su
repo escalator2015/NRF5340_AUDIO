@@ -1,7 +1,0 @@
-/home/aa/ncs/v3.2.2/zephyr/include/zephyr/sys/byteorder.h:712:20:sys_mem_swap	4	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/include/psa/crypto_struct.h:396:20:psa_extend_key_usage_flags	0	static
-/home/aa/ncs/v3.2.2/zephyr/include/zephyr/sys/byteorder.h:686:20:sys_memcpy_swap	8	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/host/crypto_psa.c:32:5:bt_crypto_init	8	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/host/crypto_psa.c:44:5:bt_rand	8	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/host/crypto_psa.c:66:5:bt_encrypt_le	88	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/host/crypto_psa.c:118:5:bt_encrypt_be	72	static

@@ -1,4 +1,0 @@
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_key_management.c:24:14:oberon_export_public_key	16	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_key_management.c:90:14:oberon_import_key	24	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_key_management.c:198:14:oberon_generate_key	8	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_key_management.c:221:14:oberon_derive_key	0	static

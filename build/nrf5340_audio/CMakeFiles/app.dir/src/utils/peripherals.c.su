@@ -1,3 +1,0 @@
-/home/aa/workspace-nordic/nrf5340_audio/src/utils/peripherals.c:58:12:location_assign_check	16	static
-/home/aa/workspace-nordic/nrf5340_audio/src/utils/peripherals.c:25:12:leds_set	16	static
-/home/aa/workspace-nordic/nrf5340_audio/src/utils/peripherals.c:94:5:peripherals_init	8	static

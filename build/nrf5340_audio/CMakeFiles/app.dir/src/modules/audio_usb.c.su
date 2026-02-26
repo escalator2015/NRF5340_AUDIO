@@ -1,6 +1,0 @@
-/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_usb.c:156:13:feature_update	0	static
-/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_usb.c:88:13:data_received	80	dynamic,bounded
-/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_usb.c:175:5:audio_usb_start	0	static
-/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_usb.c:187:6:audio_usb_stop	0	static
-/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_usb.c:195:5:audio_usb_disable	8	static
-/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_usb.c:210:5:audio_usb_init	8	static

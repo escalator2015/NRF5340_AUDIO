@@ -1,2 +1,0 @@
-/home/aa/ncs/v3.2.2/zephyr/lib/heap/heap_stats.c:11:5:sys_heap_runtime_stats_get	0	static
-/home/aa/ncs/v3.2.2/zephyr/lib/heap/heap_stats.c:25:5:sys_heap_runtime_stats_reset_max	0	static

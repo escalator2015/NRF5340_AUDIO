@@ -1,6 +1,0 @@
-/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_sync_timer.c:61:17:timestamp_from_rtc_and_timer_get	8	static
-/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_sync_timer.c:152:13:unused_timer_isr_handler	0	static
-/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_sync_timer.c:158:13:rtc_isr_handler	0	static
-/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_sync_timer.c:174:12:audio_sync_timer_init	16	static
-/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_sync_timer.c:70:10:audio_sync_timer_capture	8	static
-/home/aa/workspace-nordic/nrf5340_audio/src/modules/audio_sync_timer.c:110:10:audio_sync_timer_frame_start_capture_get	16	static

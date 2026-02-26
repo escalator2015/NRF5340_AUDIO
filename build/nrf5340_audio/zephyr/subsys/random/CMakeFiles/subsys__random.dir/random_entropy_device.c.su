@@ -1,3 +1,0 @@
-/home/aa/ncs/v3.2.2/zephyr/include/zephyr/drivers/entropy.h:86:19:z_impl_entropy_get_entropy	8	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/random/random_entropy_device.c:15:12:rand_get	32	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/random/random_entropy_device.c:68:5:z_impl_sys_csrand_get	8	static

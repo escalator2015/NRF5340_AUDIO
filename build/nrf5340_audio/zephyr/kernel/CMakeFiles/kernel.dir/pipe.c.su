@@ -1,9 +1,0 @@
-/home/aa/ncs/v3.2.2/zephyr/kernel/include/ksched.h:147:20:unpend_thread_no_timeout	8	static
-/home/aa/ncs/v3.2.2/zephyr/include/zephyr/sys/ring_buffer.h:173:20:ring_buf_init	8	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/pipe.c:93:15:copy_to_pending_readers	40	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/pipe.c:37:12:wait_for	40	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/pipe.c:67:6:z_impl_k_pipe_init	8	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/pipe.c:147:5:z_impl_k_pipe_write	72	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/pipe.c:220:5:z_impl_k_pipe_read	88	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/pipe.c:273:6:z_impl_k_pipe_reset	24	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/pipe.c:287:6:z_impl_k_pipe_close	24	static

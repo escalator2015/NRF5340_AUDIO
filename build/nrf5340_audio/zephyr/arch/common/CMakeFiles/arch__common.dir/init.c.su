@@ -1,3 +1,0 @@
-/home/aa/ncs/v3.2.2/zephyr/arch/common/init.c:27:13:arch_early_memset	8	static
-/home/aa/ncs/v3.2.2/zephyr/arch/common/init.c:40:13:arch_early_memcpy	8	static
-/home/aa/ncs/v3.2.2/zephyr/arch/common/init.c:51:6:arch_bss_zero	8	static

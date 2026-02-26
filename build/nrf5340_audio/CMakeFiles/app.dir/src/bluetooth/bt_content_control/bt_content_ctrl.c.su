@@ -1,6 +1,0 @@
-/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_content_control/bt_content_ctrl.c:37:5:bt_content_ctrl_start	72	dynamic,bounded
-/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_content_control/bt_content_ctrl.c:60:5:bt_content_ctrl_stop	72	dynamic,bounded
-/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_content_control/bt_content_ctrl.c:83:5:bt_content_ctrl_conn_disconnected	0	static
-/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_content_control/bt_content_ctrl.c:100:5:bt_content_ctrl_discover	0	static
-/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_content_control/bt_content_ctrl.c:115:5:bt_content_ctrl_uuid_populate	0	static
-/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_content_control/bt_content_ctrl.c:128:5:bt_content_ctrl_init	0	static

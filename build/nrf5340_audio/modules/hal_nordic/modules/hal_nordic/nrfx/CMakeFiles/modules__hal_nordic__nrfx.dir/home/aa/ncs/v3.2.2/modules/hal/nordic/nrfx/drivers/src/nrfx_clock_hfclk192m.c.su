@@ -1,8 +1,0 @@
-/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_hfclk192m.c:52:13:clock_stop	8	static
-/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_hfclk192m.c:66:5:nrfx_clock_hfclk192m_init	0	static
-/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_hfclk192m.c:86:6:nrfx_clock_hfclk192m_uninit	8	static
-/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_hfclk192m.c:96:6:nrfx_clock_hfclk192m_init_check	0	static
-/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_hfclk192m.c:101:6:nrfx_clock_hfclk192m_start	8	static
-/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_hfclk192m.c:119:6:nrfx_clock_hfclk192m_stop	8	static
-/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_hfclk192m.c:127:5:nrfx_clock_hfclk192m_divider_set	0	static
-/home/aa/ncs/v3.2.2/modules/hal/nordic/nrfx/drivers/src/nrfx_clock_hfclk192m.c:141:6:nrfx_clock_hfclk192m_irq_handler	8	static

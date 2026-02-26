@@ -1,6 +1,0 @@
-/home/aa/workspace-nordic/nrf5340_audio/src/audio/sw_codec_select.c:56:12:sw_codec_sample_rate_convert	32	static
-/home/aa/workspace-nordic/nrf5340_audio/src/audio/sw_codec_select.c:87:6:sw_codec_is_initialized	0	static
-/home/aa/workspace-nordic/nrf5340_audio/src/audio/sw_codec_select.c:92:5:sw_codec_encode	2128	dynamic,bounded
-/home/aa/workspace-nordic/nrf5340_audio/src/audio/sw_codec_select.c:236:5:sw_codec_decode	2176	dynamic,bounded
-/home/aa/workspace-nordic/nrf5340_audio/src/audio/sw_codec_select.c:381:5:sw_codec_uninit	8	static
-/home/aa/workspace-nordic/nrf5340_audio/src/audio/sw_codec_select.c:430:5:sw_codec_init	32	static

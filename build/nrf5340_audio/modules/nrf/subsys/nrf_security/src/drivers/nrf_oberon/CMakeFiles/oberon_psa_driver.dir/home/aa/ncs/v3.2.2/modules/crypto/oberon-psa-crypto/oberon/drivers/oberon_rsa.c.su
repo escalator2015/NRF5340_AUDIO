@@ -1,9 +1,0 @@
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_rsa.c:50:21:oberon_parse_length	12	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_rsa.c:74:21:oberon_parse_integer	32	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_rsa.c:122:21:oberon_parse_rsa_key	56	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_rsa.c:216:14:oberon_export_rsa_public_key	72	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_rsa.c:258:14:oberon_import_rsa_key	72	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_rsa.c:848:14:oberon_rsa_sign_hash	4	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_rsa.c:914:14:oberon_rsa_verify_hash	4	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_rsa.c:977:14:oberon_rsa_encrypt	0	static
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/oberon/drivers/oberon_rsa.c:1044:14:oberon_rsa_decrypt	0	static

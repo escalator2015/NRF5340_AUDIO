@@ -1,9 +1,0 @@
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_stream.c:48:6:bt_bap_qos_cfg_to_iso_qos	0	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_stream.c:63:6:bt_bap_stream_init	16	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_stream.c:79:6:bt_bap_stream_attach	16	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_stream.c:96:21:bt_bap_stream_iso_chan_get	0	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_stream.c:105:6:bt_bap_stream_cb_register	0	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_stream.c:111:5:bt_bap_ep_get_info	16	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_stream.c:169:25:bt_audio_verify_qos	0	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_stream.c:210:6:bt_audio_valid_codec_cfg	8	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/audio/bap_stream.c:266:6:bt_bap_valid_qos_pref	0	static

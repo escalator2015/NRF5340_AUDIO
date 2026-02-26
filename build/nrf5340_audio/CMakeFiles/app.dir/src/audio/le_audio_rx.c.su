@@ -1,6 +1,0 @@
-/home/aa/workspace-nordic/nrf5340_audio/src/audio/le_audio_rx.c:64:12:location_to_net_buf_index	0	static
-/home/aa/workspace-nordic/nrf5340_audio/src/audio/le_audio_rx.c:87:12:audio_frame_add	32	static
-/home/aa/workspace-nordic/nrf5340_audio/src/audio/le_audio_rx.c:276:13:audio_datapath_thread	104	dynamic,bounded
-/home/aa/workspace-nordic/nrf5340_audio/src/audio/le_audio_rx.c:299:12:audio_datapath_thread_create	40	static
-/home/aa/workspace-nordic/nrf5340_audio/src/audio/le_audio_rx.c:126:6:le_audio_rx_data_handler	152	dynamic,bounded
-/home/aa/workspace-nordic/nrf5340_audio/src/audio/le_audio_rx.c:316:5:le_audio_rx_init	8	static

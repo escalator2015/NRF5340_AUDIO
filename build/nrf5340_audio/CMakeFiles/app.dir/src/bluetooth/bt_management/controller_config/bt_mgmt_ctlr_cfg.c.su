@@ -1,5 +1,0 @@
-/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/controller_config/bt_mgmt_ctlr_cfg.c:55:13:ctlr_poll_timer_handler	8	static
-/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/controller_config/bt_mgmt_ctlr_cfg.c:65:13:wdt_timeout_cb	64	dynamic,bounded
-/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/controller_config/bt_mgmt_ctlr_cfg.c:70:5:bt_mgmt_ctlr_cfg_manufacturer_get	88	dynamic,bounded
-/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/controller_config/bt_mgmt_ctlr_cfg.c:43:13:work_ctlr_poll_handler	104	dynamic,bounded
-/home/aa/workspace-nordic/nrf5340_audio/src/bluetooth/bt_management/controller_config/bt_mgmt_ctlr_cfg.c:101:5:bt_mgmt_ctlr_cfg_init	32	static

@@ -1,2 +1,0 @@
-/home/aa/ncs/v3.2.2/zephyr/include/zephyr/bluetooth/audio/audio.h:1832:21:bt_audio_location_bit_to_str	0	static
-/home/aa/workspace-nordic/nrf5340_audio/build/nrf5340_audio/fw_info_app.c:24:5:fw_info_app_print	152	dynamic,bounded

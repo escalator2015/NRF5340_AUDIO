@@ -1,6 +1,0 @@
-/home/aa/ncs/v3.2.2/zephyr/kernel/include/ksched.h:147:20:unpend_thread_no_timeout	8	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/stack.c:27:6:k_stack_init	0	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/stack.c:44:9:z_impl_k_stack_alloc_init	16	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/stack.c:80:5:k_stack_cleanup	8	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/stack.c:101:5:z_impl_k_stack_push	32	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/stack.c:148:5:z_impl_k_stack_pop	40	static

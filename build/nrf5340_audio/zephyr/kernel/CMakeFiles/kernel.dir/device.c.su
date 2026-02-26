@@ -1,8 +1,0 @@
-/home/aa/ncs/v3.2.2/zephyr/kernel/device.c:24:6:z_device_state_init	8	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/device.c:31:5:do_device_init	16	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/device.c:76:5:z_impl_device_init	8	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/device.c:189:8:z_device_get_all_static	0	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/device.c:199:6:z_impl_device_is_ready	0	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/device.c:96:22:z_impl_device_get_binding	16	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/device.c:139:22:z_impl_device_get_by_dt_nodelabel	24	static
-/home/aa/ncs/v3.2.2/zephyr/kernel/device.c:212:5:z_impl_device_deinit	8	static

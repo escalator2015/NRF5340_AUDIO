@@ -1,7 +1,0 @@
-/home/aa/ncs/v3.2.2/zephyr/drivers/watchdog/wdt_nrfx.c:152:12:wdt_nrf_feed	8	static
-/home/aa/ncs/v3.2.2/zephyr/drivers/watchdog/wdt_nrfx.c:100:12:wdt_nrf_install_timeout	24	static
-/home/aa/ncs/v3.2.2/zephyr/drivers/watchdog/wdt_nrfx.c:67:12:wdt_nrf_disable	8	static
-/home/aa/ncs/v3.2.2/zephyr/drivers/watchdog/wdt_nrfx.c:34:12:wdt_nrf_setup	24	static
-/home/aa/ncs/v3.2.2/zephyr/drivers/watchdog/wdt_nrfx.c:245:1:wdt_0_init	8	static
-/home/aa/ncs/v3.2.2/zephyr/drivers/watchdog/wdt_nrfx.c:177:13:wdt_event_handler	24	static
-/home/aa/ncs/v3.2.2/zephyr/drivers/watchdog/wdt_nrfx.c:245:1:wdt_0_event_handler	8	static

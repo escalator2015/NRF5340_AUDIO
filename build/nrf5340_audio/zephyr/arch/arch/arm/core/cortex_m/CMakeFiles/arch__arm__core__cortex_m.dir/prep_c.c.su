@@ -1,3 +1,0 @@
-/home/aa/ncs/v3.2.2/zephyr/arch/arm/core/cortex_m/prep_c.c:90:20:z_arm_floating_point_init	0	static
-/home/aa/ncs/v3.2.2/zephyr/arch/arm/core/cortex_m/prep_c.c:58:13:relocate_vector_table	0	static
-/home/aa/ncs/v3.2.2/zephyr/arch/arm/core/cortex_m/prep_c.c:198:20:z_prep_c	8	static

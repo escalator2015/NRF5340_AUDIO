@@ -1,2 +1,0 @@
-/home/aa/ncs/v3.2.2/modules/crypto/oberon-psa-crypto/include/psa/crypto_struct.h:396:20:psa_extend_key_usage_flags	0	static
-/home/aa/ncs/v3.2.2/zephyr/subsys/bluetooth/crypto/bt_crypto_psa.c:19:5:bt_crypto_aes_cmac	80	static

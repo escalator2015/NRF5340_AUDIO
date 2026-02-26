@@ -1,7 +1,0 @@
-/home/aa/ncs/v3.2.2/zephyr/drivers/i2c/i2c_nrfx_twim.c:195:13:event_handler	8	static
-/home/aa/ncs/v3.2.2/zephyr/drivers/i2c/i2c_nrfx_twim.c:228:12:i2c_nrfx_twim_deinit	8	static
-/home/aa/ncs/v3.2.2/zephyr/drivers/i2c/i2c_nrfx_twim.c:218:12:i2c_nrfx_twim_init	16	static
-/home/aa/ncs/v3.2.2/zephyr/drivers/i2c/i2c_nrfx_twim.c:304:1:pre_init0	8	static
-/home/aa/ncs/v3.2.2/zephyr/drivers/i2c/i2c_nrfx_twim.c:38:5:i2c_nrfx_twim_exclusive_access_acquire	8	static
-/home/aa/ncs/v3.2.2/zephyr/drivers/i2c/i2c_nrfx_twim.c:52:6:i2c_nrfx_twim_exclusive_access_release	8	static
-/home/aa/ncs/v3.2.2/zephyr/drivers/i2c/i2c_nrfx_twim.c:61:12:i2c_nrfx_twim_transfer	136	dynamic,bounded

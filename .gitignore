@@ -5,3 +5,4 @@
 # build directories
 # Solo ignorar la carpeta build principal, mantener build_* (backups, exports)
 /build/
+/build_*

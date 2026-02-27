@@ -56,3 +56,18 @@ I2S_SDIN	P1.10	libre	✅
 led_sync_status	P0.29	Fijo ON	Presentation compensation LOCKED — decoder de audio en sincronía perfecta ✅
 led_conn_status	P0.28	Parpadea	Escaneando el broadcaster. Se pone fijo cuando el BIG sync se establece
 led_app_status	P0.30	Parpadea	Activo solo al arrancar (init de periféricos) — luego se apaga
+
+==============================================================
+Flujo en el equipo nuevo:
+git clone <repo> NRF5340_AUDIO
+cd NRF5340_AUDIO
+
+# 1. Instalar NCS v3.2.2 y activar toolchain
+
+# 2. Crear los 3 directorios de build:
+./build.sh -p          # → crea build/
+./build.sh -n -p       # → crea build_bt40ne/
+./build.sh -s -p       # → crea build_bt40ne_source/
+
+# 3. La extensión descubre las 3 configs automáticamente
+#    (no hace falta hacer nada más en VS Code)

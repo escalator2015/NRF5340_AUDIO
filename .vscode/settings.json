@@ -1,0 +1,13 @@
+{
+    // Registra esta carpeta como aplicación nRF Connect.
+    // La extensión la escaneará automáticamente en busca de directorios de build.
+    // Tras un git clone, ejecuta ./build.sh (y -n y -s) para crear los builds
+    // y la extensión los descubrirá sola.
+    "nrf-connect.applications": [
+        "${workspaceFolder}"
+    ],
+
+    // Toolchain y SDK — ajustar a la versión instalada en el equipo destino
+    "nrf-connect.toolchain.version": "v3.2.2",
+    "nrf-connect.sdk.version": "v3.2.2"
+}

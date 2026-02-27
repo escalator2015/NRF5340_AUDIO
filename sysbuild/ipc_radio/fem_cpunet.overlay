@@ -1,0 +1,31 @@
+/*
+ * nRF21540 FEM configuration for BT40NE module (Fanstel) — GPIO-only mode
+ * Pins (nRF5340 host side):
+ *   TX_EN   = P0.21
+ *   RX_EN   = P0.27
+ *   PDN     = P0.26
+ *   ANT_SEL = P1.05
+ *   MODE    = P1.04
+ *
+ * SPI not used: GPIO-only mode is sufficient for BLE audio.
+ * SPI can be added later for TX power register control.
+ */
+
+/ {
+	nrf_radio_fem: nrf21540_fem {
+		compatible = "nordic,nrf21540-fem";
+		tx-en-gpios   = <&gpio0 21 GPIO_ACTIVE_HIGH>;
+		rx-en-gpios   = <&gpio0 27 GPIO_ACTIVE_HIGH>;
+		pdn-gpios     = <&gpio0 26 GPIO_ACTIVE_HIGH>;
+		/* ANT_SEL: ACTIVE_HIGH => driver pone INACTIVE = LOW = ANT1.
+		 * Si no hay alcance, probar ACTIVE_LOW (=> fisico HIGH = ANT2). */
+		ant-sel-gpios = <&gpio1 5  GPIO_ACTIVE_HIGH>;
+		mode-gpios    = <&gpio1 4  GPIO_ACTIVE_HIGH>;
+		supply-voltage-mv = <3300>;
+	};
+};
+
+/* Formal link: radio driver must know which FEM to use */
+&radio {
+	fem = <&nrf_radio_fem>;
+};

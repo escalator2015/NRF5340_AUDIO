@@ -260,9 +260,9 @@ endmenu # SW Codec
 menu "Stream"
 
 config BUF_BLE_RX_PACKET_NUM
-	int
+	int "Number of BLE RX packets in pool"
 	default 5
-	range 2 5
+	range 2 20
 	help
 	  Value can be adjusted to affect the overall latency.
 	  This adjusts the number packets in the BLE FIFO RX buffer,
@@ -270,6 +270,7 @@ config BUF_BLE_RX_PACKET_NUM
 	  latency and reduce stability, and vice-versa.
 	  Two is recommended minimum to reduce the likelyhood of audio
 	  gaps due to BLE retransmits.
+	  Values above 5 useful to absorb bursts at BIG sync re-establishment.
 
 config STREAM_BIDIRECTIONAL
 	depends on TRANSPORT_CIS

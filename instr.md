@@ -24,3 +24,25 @@ cp build/nrf5340_audio_sysbuild_cache.txt build_config_export/
 git add build_config_export/
 git commit -m "Actualizar configuración de build"
 git push
+
+LRCK_M cambiado a P1.12. Configuración final libre de conflictos:
+
+Señal I2S	Pin	nRF21540	Estado
+I2S_MCK	P1.11	libre	✅
+I2S_SCK_M	P1.07	libre	✅  BLANCO
+I2S_LRCK_M	P1.12	libre	✅  GRIS
+I2S_SDOUT	P1.09	libre	✅  MARRON
+I2S_SDIN	P1.10	libre	✅
+
+# nRF5340DK (sin FEM):
+./build.sh              # incremental
+./build.sh -p           # limpio
+./build.sh -p -f        # limpio + flash DK
+
+# BT40NE (con nRF21540 FEM):
+./build.sh -n           # incremental
+./build.sh -n -p        # limpio
+./build.sh -n -p -F     # limpio + flash BT40NE vía DEBUG_OUT
+
+# Flash manual BT40NE:
+./flash_bt40ne.sh build_bt40ne

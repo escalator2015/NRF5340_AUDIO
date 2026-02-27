@@ -1,10 +1,11 @@
 #!/bin/bash
-# Script de build para nRF5340 Audio - Broadcast Sink
+# Script de build para nRF5340 Audio
 # Compatible con NCS v3.2.2
 #
 # Targets:
-#   (defecto)  nRF5340 DK            → build dir: build/
-#   --bt40ne   Fanstel BT40NE + FEM  → build dir: build_bt40ne/
+#   (defecto)  nRF5340 DK, broadcast_sink   → build dir: build/
+#   --bt40ne   BT40NE + FEM, broadcast_sink  → build dir: build_bt40ne/
+#   --source   BT40NE + FEM, broadcast_source→ build dir: build_bt40ne_source/
 
 set -e
 
@@ -19,13 +20,15 @@ NC='\033[0m'
 BOARD="nrf5340dk/nrf5340/cpuapp"
 EXTRA_CONF_FILE="broadcast_sink/overlay-broadcast_sink.conf"
 OVERLAY_FILE="boards/nrf5340dk_nrf5340_cpuapp.overlay"
+SOURCE_MODE=""
 
 # Función de ayuda
 show_help() {
     echo "Uso: $0 [opciones]"
     echo ""
     echo "Opciones:"
-    echo "  -n, --bt40ne       Build para Fanstel BT40NE (nRF21540 FEM)"
+    echo "  -n, --bt40ne       Build para Fanstel BT40NE (nRF21540 FEM), broadcast_sink"
+    echo "  -s, --source       Build para Fanstel BT40NE (nRF21540 FEM), broadcast_source"
     echo "  -p, --pristine     Build limpio desde cero"
     echo "  -f, --flash        Flashear después de compilar (solo nRF5340DK)"
     echo "  -F, --flash-bt40ne Flashear BT40NE vía DEBUG_OUT después de compilar"
@@ -34,12 +37,13 @@ show_help() {
     echo "  -h, --help         Mostrar esta ayuda"
     echo ""
     echo "Ejemplos:"
-    echo "  $0                 Build incremental para nRF5340DK"
+    echo "  $0                 Build incremental para nRF5340DK (broadcast_sink)"
     echo "  $0 -p              Build limpio para nRF5340DK"
     echo "  $0 -p -f           Build limpio + flash nRF5340DK"
-    echo "  $0 -n              Build incremental para BT40NE"
-    echo "  $0 -n -p           Build limpio para BT40NE"
-    echo "  $0 -n -p -F        Build limpio + flash BT40NE"
+    echo "  $0 -n              Build incremental BT40NE broadcast_sink"
+    echo "  $0 -n -p -F        Build limpio + flash BT40NE broadcast_sink"
+    echo "  $0 -s              Build incremental BT40NE broadcast_source"
+    echo "  $0 -s -p -F        Build limpio + flash BT40NE broadcast_source"
 }
 
 # Parsear argumentos
@@ -53,6 +57,11 @@ while [[ $# -gt 0 ]]; do
     case $1 in
         -n|--bt40ne)
             BT40NE="1"
+            shift
+            ;;
+        -s|--source)
+            BT40NE="1"
+            SOURCE_MODE="1"
             shift
             ;;
         -p|--pristine)
@@ -102,15 +111,22 @@ if ! command -v west &> /dev/null; then
 fi
 
 # --- Configurar target ---------------------------------------------------------
+PROJ_DIR="$(pwd)"
 if [ -n "$BT40NE" ]; then
-    BUILD_DIR="build_bt40ne"
-    TARGET_NAME="Fanstel BT40NE (nRF5340 + nRF21540 FEM)"
-    PROJ_DIR="$(pwd)"
     FEM_ARGS="-Dipc_radio_EXTRA_CONF_FILE=${PROJ_DIR}/sysbuild/ipc_radio/fem.conf \
               -Dipc_radio_EXTRA_DTC_OVERLAY_FILE=${PROJ_DIR}/sysbuild/ipc_radio/fem_cpunet.overlay"
+    if [ -n "$SOURCE_MODE" ]; then
+        BUILD_DIR="build_bt40ne_source"
+        TARGET_NAME="Fanstel BT40NE (nRF5340 + nRF21540 FEM) — broadcast_source"
+        EXTRA_CONF_FILE="broadcast_source/overlay-broadcast_source.conf"
+        OVERLAY_FILE="boards/nrf5340dk_nrf5340_cpuapp.overlay;boards/nrf5340dk_nrf5340_cpuapp_source.overlay"
+    else
+        BUILD_DIR="build_bt40ne"
+        TARGET_NAME="Fanstel BT40NE (nRF5340 + nRF21540 FEM) — broadcast_sink"
+    fi
 else
     BUILD_DIR="build"
-    TARGET_NAME="nRF5340 DK"
+    TARGET_NAME="nRF5340 DK — broadcast_sink"
     FEM_ARGS=""
 fi
 

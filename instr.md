@@ -34,15 +34,25 @@ I2S_LRCK_M	P1.12	libre	✅  GRIS
 I2S_SDOUT	P1.09	libre	✅  MARRON
 I2S_SDIN	P1.10	libre	✅
 
-# nRF5340DK (sin FEM):
+# nRF5340DK (sin FEM) — broadcast_sink:
 ./build.sh              # incremental
 ./build.sh -p           # limpio
 ./build.sh -p -f        # limpio + flash DK
 
-# BT40NE (con nRF21540 FEM):
+# BT40NE (con nRF21540 FEM) — broadcast_sink:
 ./build.sh -n           # incremental
 ./build.sh -n -p        # limpio
 ./build.sh -n -p -F     # limpio + flash BT40NE vía DEBUG_OUT
 
+# BT40NE (con nRF21540 FEM) — broadcast_source:
+./build.sh -s           # incremental
+./build.sh -s -p        # limpio
+./build.sh -s -p -F     # limpio + flash BT40NE vía DEBUG_OUT
+
 # Flash manual BT40NE:
-./flash_bt40ne.sh build_bt40ne
+./flash_bt40ne.sh build_bt40ne          # sink
+./flash_bt40ne.sh build_bt40ne_source   # source
+
+led_sync_status	P0.29	Fijo ON	Presentation compensation LOCKED — decoder de audio en sincronía perfecta ✅
+led_conn_status	P0.28	Parpadea	Escaneando el broadcaster. Se pone fijo cuando el BIG sync se establece
+led_app_status	P0.30	Parpadea	Activo solo al arrancar (init de periféricos) — luego se apaga

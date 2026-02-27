@@ -1,0 +1,17 @@
+/*
+ * USB Audio headset node — solo para broadcast_source (CONFIG_AUDIO_SOURCE_USB=y)
+ * Requerido por audio_usb.c: DEVICE_DT_GET(DT_NODELABEL(hs_0))
+ * No incluir en builds sink para evitar habilitar el stack USB innecesariamente.
+ */
+
+/ {
+	hs_0: hs_0 {
+		compatible = "usb-audio-hs";
+		mic-feature-mute;
+		mic-channel-l;
+		mic-channel-r;
+		hp-feature-mute;
+		hp-channel-l;
+		hp-channel-r;
+	};
+};

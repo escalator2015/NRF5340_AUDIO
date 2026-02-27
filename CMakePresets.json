@@ -42,5 +42,25 @@
                 "ipc_radio_DEBUG_THREAD_INFO": false
             }
         }
+        ,
+        {
+            "name": "build_bt40ne_source",
+            "displayName": "Build for Fanstel BT40NE (nRF5340 + nRF21540 FEM) — broadcast_source",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build_bt40ne_source",
+            "description": "Usar: ./build.sh -s [-p] [-F]  (NO usar west build --preset)",
+            "cacheVariables": {
+                "BOARD": "nrf5340dk/nrf5340/cpuapp",
+                "EXTRA_CONF_FILE": "broadcast_source/overlay-broadcast_source.conf",
+                "CONF_FILE": "prj.conf",
+                "EXTRA_DTC_OVERLAY_FILE": "boards/nrf5340dk_nrf5340_cpuapp.overlay",
+                "DTC_OVERLAY_FILE": "boards/nrf5340dk_nrf5340_cpuapp.overlay",
+                "ipc_radio_EXTRA_CONF_FILE": "sysbuild/ipc_radio/fem.conf",
+                "ipc_radio_EXTRA_DTC_OVERLAY_FILE": "sysbuild/ipc_radio/fem_cpunet.overlay",
+                "DEBUG_THREAD_INFO": false,
+                "nrf5340_audio_DEBUG_THREAD_INFO": false,
+                "ipc_radio_DEBUG_THREAD_INFO": false
+            }
+        }
     ]
 }

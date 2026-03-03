@@ -35,8 +35,8 @@
                 "CONF_FILE": "prj.conf",
                 "EXTRA_DTC_OVERLAY_FILE": "boards/nrf5340dk_nrf5340_cpuapp.overlay",
                 "DTC_OVERLAY_FILE": "boards/nrf5340dk_nrf5340_cpuapp.overlay",
-                "ipc_radio_EXTRA_CONF_FILE": "sysbuild/ipc_radio/fem.conf",
-                "ipc_radio_EXTRA_DTC_OVERLAY_FILE": "sysbuild/ipc_radio/fem_cpunet.overlay",
+                "ipc_radio_EXTRA_CONF_FILE": "${sourceDir}/sysbuild/ipc_radio/fem.conf",
+                "ipc_radio_EXTRA_DTC_OVERLAY_FILE": "${sourceDir}/sysbuild/ipc_radio/fem_cpunet.overlay",
                 "DEBUG_THREAD_INFO": false,
                 "nrf5340_audio_DEBUG_THREAD_INFO": false,
                 "ipc_radio_DEBUG_THREAD_INFO": false
@@ -55,8 +55,8 @@
                 "CONF_FILE": "prj.conf",
                 "EXTRA_DTC_OVERLAY_FILE": "boards/nrf5340dk_nrf5340_cpuapp.overlay",
                 "DTC_OVERLAY_FILE": "boards/nrf5340dk_nrf5340_cpuapp.overlay",
-                "ipc_radio_EXTRA_CONF_FILE": "sysbuild/ipc_radio/fem.conf",
-                "ipc_radio_EXTRA_DTC_OVERLAY_FILE": "sysbuild/ipc_radio/fem_cpunet.overlay",
+                "ipc_radio_EXTRA_CONF_FILE": "${sourceDir}/sysbuild/ipc_radio/fem.conf",
+                "ipc_radio_EXTRA_DTC_OVERLAY_FILE": "${sourceDir}/sysbuild/ipc_radio/fem_cpunet.overlay",
                 "DEBUG_THREAD_INFO": false,
                 "nrf5340_audio_DEBUG_THREAD_INFO": false,
                 "ipc_radio_DEBUG_THREAD_INFO": false

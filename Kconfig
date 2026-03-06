@@ -42,6 +42,7 @@ endchoice
 rsource "Kconfig.defaults"
 rsource "src/audio/Kconfig"
 rsource "src/bluetooth/Kconfig"
+rsource "src/control/Kconfig"
 rsource "src/drivers/Kconfig"
 rsource "src/modules/Kconfig"
 rsource "src/utils/Kconfig"

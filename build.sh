@@ -123,6 +123,7 @@ if [ -n "$BT40NE" ]; then
     else
         BUILD_DIR="build_bt40ne"
         TARGET_NAME="Fanstel BT40NE (nRF5340 + nRF21540 FEM) — broadcast_sink"
+        OVERLAY_FILE="boards/nrf5340dk_nrf5340_cpuapp.overlay;boards/nrf5340dk_nrf5340_cpuapp_sink.overlay"
     fi
 else
     BUILD_DIR="build"

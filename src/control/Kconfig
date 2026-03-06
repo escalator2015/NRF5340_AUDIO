@@ -1,0 +1,58 @@
+#
+# Copyright (c) 2026
+#
+# SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+#
+
+menu "Control service"
+
+config CTRL_NVS
+	bool "NVS persistence for control parameters"
+	select SETTINGS
+	help
+	  Persists receiver name, volume and mute state via the settings
+	  subsystem.
+
+config CTRL_SERVICE
+	bool "Auracast Control Service (GATT peripheral)"
+	select CTRL_NVS
+	select JSON_LIBRARY
+	select BT_PERIPHERAL
+	help
+	  Exposes a GATT custom service (ACS) that accepts JSON commands for
+	  volume, mute and name control from a BT Central.
+
+if CTRL_NVS
+
+module = CTRL_NVS
+module-str = ctrl_nvs
+source "subsys/logging/Kconfig.template.log_config"
+
+endif # CTRL_NVS
+
+if CTRL_SERVICE
+
+module = CTRL_SERVICE
+module-str = ctrl_service
+source "subsys/logging/Kconfig.template.log_config"
+
+endif # CTRL_SERVICE
+
+config CTRL_CENTRAL
+	bool "Auracast Control Central (BT Central manager)"
+	select JSON_LIBRARY
+	select BT_CENTRAL
+	select BT_GATT_CLIENT
+	help
+	  Scans for sinks that advertise the ACS service UUID, connects via
+	  ACL and sends JSON commands over the ACS CMD characteristic.
+
+if CTRL_CENTRAL
+
+config CTRL_CENTRAL_LOG_LEVEL
+	int "Log level for ctrl_central"
+	default 3
+
+endif # CTRL_CENTRAL
+
+endmenu # Control service

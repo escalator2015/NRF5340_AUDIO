@@ -22,6 +22,10 @@
 #include "bt_mgmt.h"
 #include "fw_info_app.h"
 
+#if defined(CONFIG_CTRL_CENTRAL)
+#include "ctrl_central.h"
+#endif
+
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(main, CONFIG_MAIN_LOG_LEVEL);
 
@@ -137,44 +141,9 @@ static void button_msg_sub_thread(void)
 			return;
 		}
 
-		switch (msg.button_pin) {
-		case BUTTON_PLAY_PAUSE:
-			if (strm_state == STATE_STREAMING) {
-				ret = broadcast_source_stop(0);
-				if (ret) {
-					LOG_WRN("Failed to stop broadcaster: %d", ret);
-				}
-			} else if (strm_state == STATE_PAUSED) {
-				ret = broadcast_source_start(0, ext_adv);
-				if (ret) {
-					LOG_WRN("Failed to start broadcaster: %d", ret);
-				}
-			} else {
-				LOG_WRN("In invalid state: %d", strm_state);
-			}
-
-			break;
-
-		case BUTTON_4:
-			if (IS_ENABLED(CONFIG_AUDIO_TEST_TONE)) {
-				if (strm_state != STATE_STREAMING) {
-					LOG_WRN("Not in streaming state");
-					break;
-				}
-
-				ret = audio_system_encode_test_tone_step();
-				if (ret) {
-					LOG_WRN("Failed to play test tone, ret: %d", ret);
-				}
-
-				break;
-			}
-
-			break;
-
-		default:
-			LOG_WRN("Unexpected/unhandled button id: %d", msg.button_pin);
-		}
+		/* Button reserved for future use — no action assigned */
+		ARG_UNUSED(msg);
+		(void)ret;
 
 		STACK_USAGE_PRINT("button_msg_thread", &button_msg_sub_thread_data);
 	}
@@ -577,6 +546,11 @@ int main(void)
 
 	ret = bt_mgmt_init();
 	ERR_CHK(ret);
+
+#if defined(CONFIG_CTRL_CENTRAL)
+	ret = ctrl_central_init();
+	ERR_CHK_MSG(ret, "Failed to initialize ACS central");
+#endif
 
 	ret = audio_system_init();
 	ERR_CHK(ret);

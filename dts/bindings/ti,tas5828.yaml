@@ -1,0 +1,8 @@
+# Copyright (c) 2026
+# SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+
+description: TI TAS5828 class-D audio amplifier
+
+compatible: "ti,tas5828"
+
+include: i2c-device.yaml

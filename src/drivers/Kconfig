@@ -29,4 +29,21 @@ module-str = cs47l63
 source "subsys/logging/Kconfig.template.log_config"
 
 endif # NRF5340_AUDIO_CS47L63_DRIVER
+
+#----------------------------------------------------------------------------#
+menuconfig TAS5828_DRIVER
+	bool "TAS5828 amplifier I2C driver"
+	depends on I2C
+	help
+	  Driver for the Texas Instruments TAS5828 class-D amplifier.
+	  Controls volume and mute via I2C.
+
+if TAS5828_DRIVER
+
+module = TAS5828
+module-str = tas5828
+source "subsys/logging/Kconfig.template.log_config"
+
+endif # TAS5828_DRIVER
+
 endmenu # Drivers

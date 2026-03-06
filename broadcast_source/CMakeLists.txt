@@ -5,3 +5,7 @@
 #
 
 target_sources(app PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/main.c)
+
+target_sources_ifdef(CONFIG_CTRL_CENTRAL app PRIVATE
+  ${CMAKE_CURRENT_SOURCE_DIR}/ctrl_central.c
+)

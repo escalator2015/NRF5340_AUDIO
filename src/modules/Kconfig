@@ -230,4 +230,40 @@ source "subsys/logging/Kconfig.template.log_config"
 
 endif # NRF5340_AUDIO_SD_CARD_LC3_STREAMER
 
+#----------------------------------------------------------------------------#
+menuconfig HW_CODEC_TAS5828
+	bool "HW codec implementation via TAS5828"
+	depends on TAS5828_DRIVER
+	help
+	  Implements the hw_codec.h API using the TAS5828 I2C amplifier.
+	  Volume and mute events from zbus are applied directly to the
+	  amplifier via I2C.
+
+if HW_CODEC_TAS5828
+
+config HW_CODEC_TAS5828_DEFAULT_VOL_DB
+	int "Default volume in dB at startup"
+	range -64 0
+	default -15
+	help
+	  Applied once during hw_codec_init(). 0 = maximum output.
+
+config HW_CODEC_TAS5828_VOLUME_SUB_QUEUE_SIZE
+	int "zbus volume subscriber queue size"
+	default 4
+
+config HW_CODEC_TAS5828_THREAD_STACK_SIZE
+	int "Stack size for the volume subscriber thread"
+	default 512
+
+config HW_CODEC_TAS5828_THREAD_PRIO
+	int "Priority for the volume subscriber thread"
+	default 5
+
+module = HW_CODEC_TAS5828
+module-str = hw-codec-tas5828
+source "subsys/logging/Kconfig.template.log_config"
+
+endif # HW_CODEC_TAS5828
+
 endmenu # Modules

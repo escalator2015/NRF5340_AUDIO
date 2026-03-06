@@ -23,6 +23,11 @@
 #include "le_audio_rx.h"
 #include "fw_info_app.h"
 
+#if defined(CONFIG_CTRL_SERVICE)
+#include "ctrl_service.h"
+#include "ctrl_service_uuids.h"
+#endif
+
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(main, CONFIG_MAIN_LOG_LEVEL);
 
@@ -95,72 +100,9 @@ static void button_msg_sub_thread(void)
 			continue;
 		}
 
-		switch (msg.button_pin) {
-		case BUTTON_PLAY_PAUSE:
-			if (strm_state == STATE_STREAMING) {
-				ret = broadcast_sink_stop();
-				if (ret) {
-					LOG_WRN("Failed to stop broadcast sink: %d", ret);
-				}
-			} else if (strm_state == STATE_PAUSED) {
-				ret = broadcast_sink_start();
-				if (ret) {
-					LOG_WRN("Failed to start broadcast sink: %d", ret);
-				}
-			} else {
-				LOG_WRN("In invalid state: %d", strm_state);
-			}
-
-			break;
-
-		case BUTTON_VOLUME_UP:
-			ret = bt_r_and_c_volume_up();
-			if (ret) {
-				LOG_WRN("Failed to increase volume: %d", ret);
-			}
-
-			break;
-
-		case BUTTON_VOLUME_DOWN:
-			ret = bt_r_and_c_volume_down();
-			if (ret) {
-				LOG_WRN("Failed to decrease volume: %d", ret);
-			}
-
-			break;
-
-		case BUTTON_4:
-			/* Unused button */
-			break;
-
-		case BUTTON_5:
-			if (IS_ENABLED(CONFIG_AUDIO_MUTE)) {
-				ret = bt_r_and_c_volume_mute(false);
-				if (ret) {
-					LOG_WRN("Failed to mute, ret: %d", ret);
-				}
-
-				break;
-			}
-
-			ret = broadcast_sink_disable();
-			if (ret) {
-				LOG_ERR("Failed to disable the broadcast sink: %d", ret);
-				break;
-			}
-
-			ret = bt_mgmt_scan_start(0, 0, BT_MGMT_SCAN_TYPE_BROADCAST, NULL,
-						 BRDCAST_ID_NOT_USED);
-
-			if (ret) {
-				LOG_WRN("Failed to start scanning for broadcaster: %d", ret);
-			}
-
-			break;
-
-		default:
-			LOG_WRN("Unexpected/unhandled button id: %d", msg.button_pin);
-		}
+		/* Buttons not used on sink — controlled remotely from source via BT */
+		ARG_UNUSED(msg);
+		(void)ret;
 
 		STACK_USAGE_PRINT("button_msg_thread", &button_msg_sub_thread_data);
 	}
@@ -460,7 +402,8 @@ static int zbus_link_producers_observers(void)
 		return ret;
 	}
 
-	if (IS_ENABLED(CONFIG_BOARD_NRF5340_AUDIO_DK_NRF5340_CPUAPP)) {
+if (IS_ENABLED(CONFIG_NRF5340_AUDIO_CS47L63_DRIVER) ||
+            IS_ENABLED(CONFIG_HW_CODEC_TAS5828)) {
 		ret = zbus_chan_add_obs(&volume_chan, &volume_evt_sub, ZBUS_ADD_OBS_TIMEOUT_MS);
 		if (ret) {
 			LOG_ERR("Failed to add add volume sub");
@@ -516,10 +459,15 @@ static int ext_adv_populate(struct bt_data *ext_adv_buf, size_t ext_adv_buf_size
 		return ret;
 	}
 
-	ext_adv_buf[ext_adv_buf_cnt].type = BT_DATA_NAME_COMPLETE;
-	ext_adv_buf[ext_adv_buf_cnt].data = CONFIG_BT_DEVICE_NAME;
-	ext_adv_buf[ext_adv_buf_cnt].data_len = sizeof(CONFIG_BT_DEVICE_NAME) - 1;
-	ext_adv_buf_cnt++;
+#if defined(CONFIG_CTRL_SERVICE)
+        /* Añadir UUID 128-bit del servicio ACS para que el source lo detecte */
+        static const uint8_t acs_uuid_adv[] = { ACS_SERVICE_UUID_VAL };
+
+        ext_adv_buf[ext_adv_buf_cnt].type     = BT_DATA_UUID128_ALL;
+        ext_adv_buf[ext_adv_buf_cnt].data     = acs_uuid_adv;
+        ext_adv_buf[ext_adv_buf_cnt].data_len = sizeof(acs_uuid_adv);
+        ext_adv_buf_cnt++;
+#endif
 
 	ret = broadcast_sink_adv_populate(&ext_adv_buf[ext_adv_buf_cnt],
 					  ext_adv_buf_size - ext_adv_buf_cnt);
@@ -568,6 +516,11 @@ int main(void)
 
 	ret = bt_mgmt_init();
 	ERR_CHK(ret);
+
+#if defined(CONFIG_CTRL_SERVICE)
+	ret = ctrl_service_init();
+	ERR_CHK_MSG(ret, "Failed to initialize ACS control service");
+#endif
 
 	ret = audio_system_init();
 	ERR_CHK(ret);

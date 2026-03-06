@@ -56,6 +56,7 @@ zephyr_library_include_directories(app PRIVATE ${ZEPHYR_NRF_MODULE_DIR}/boards/a
 # Application sources
 add_subdirectory(src/audio)
 add_subdirectory(src/bluetooth)
+add_subdirectory(src/control)
 add_subdirectory(src/drivers)
 add_subdirectory(src/modules)
 add_subdirectory(src/utils)

@@ -34,6 +34,12 @@ I2S_LRCK_M	P1.12	libre	✅  GRIS
 I2S_SDOUT	P1.09	libre	✅  MARRON
 I2S_SDIN	P1.10	libre	✅
 
+Pines I2C — TAS5828:
+
+Señal I2C	Pin
+I2C_SDA	P0.02
+I2C_SCL	P0.03
+
 # nRF5340DK (sin FEM) — broadcast_sink:
 ./build.sh              # incremental
 ./build.sh -p           # limpio
@@ -42,12 +48,12 @@ I2S_SDIN	P1.10	libre	✅
 # BT40NE (con nRF21540 FEM) — broadcast_sink:
 ./build.sh -n           # incremental
 ./build.sh -n -p        # limpio
-./build.sh -n -p -F     # limpio + flash BT40NE vía DEBUG_OUT
+./build.sh -n -p -f     # limpio + flash BT40NE vía DEBUG_OUT
 
 # BT40NE (con nRF21540 FEM) — broadcast_source:
 ./build.sh -s           # incremental
 ./build.sh -s -p        # limpio
-./build.sh -s -p -F     # limpio + flash BT40NE vía DEBUG_OUT
+./build.sh -s -p -f     # limpio + flash BT40NE vía DEBUG_OUT
 
 # Flash manual BT40NE:
 ./flash_bt40ne.sh build_bt40ne          # sink
@@ -64,10 +70,17 @@ cd NRF5340_AUDIO
 
 # 1. Instalar NCS v3.2.2 y activar toolchain
 
-# 2. Crear los 3 directorios de build:
-./build.sh -p          # → crea build/
-./build.sh -n -p       # → crea build_bt40ne/
-./build.sh -s -p       # → crea build_bt40ne_source/
+nRF5340 DK (debugger USB integrado):
+./build.sh -p        # build limpio
+./build.sh -p -f     # build limpio + flash (west flash via USB)
+./build.sh           # build incremental
 
-# 3. La extensión descubre las 3 configs automáticamente
-#    (no hace falta hacer nada más en VS Code)
+Fanstel BT40NE — broadcast_sink (sin debugger, JTAG via DK):
+./build.sh -n -p     # build limpio
+./build.sh -n -p -f  # build limpio + flash (JLink via DEBUG_OUT del DK)
+./build.sh -n        # build incremental
+
+Fanstel BT40NE — broadcast_source (sin debugger, JTAG via DK):
+./build.sh -s -p     # build limpio
+./build.sh -s -p -f  # build limpio + flash (JLink via DEBUG_OUT del DK)
+./build.sh -s        # build incremental

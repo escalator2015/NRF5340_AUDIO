@@ -28,6 +28,17 @@
  */
 #define TAS5828_DB_TO_REG(db)  ((uint8_t)((-((int8_t)(db))) * 2))
 
+/**
+ * @brief Verifica si el TAS5828 está accesible en el bus I2C.
+ *
+ * Realiza una lectura mínima (registro DEVICE_CTRL_2) sin abortar si
+ * el dispositivo no responde. Debe llamarse ANTES de tas5828_init().
+ *
+ * @return 0 si el TAS5828 está presente y responde.
+ *         Negativo (-EIO, -ENXIO …) si no hay respuesta.
+ */
+int tas5828_probe(void);
+
 /** Inicializa el driver (debe llamarse una vez, tras I2C listo). */
 int tas5828_init(void);
 

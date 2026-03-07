@@ -594,7 +594,8 @@ int audio_system_init(void)
 		return ret;
 	}
 
-	if (IS_ENABLED(CONFIG_BOARD_NRF5340_AUDIO_DK_NRF5340_CPUAPP)) {
+	if (IS_ENABLED(CONFIG_BOARD_NRF5340_AUDIO_DK_NRF5340_CPUAPP) ||
+	    IS_ENABLED(CONFIG_HW_CODEC_TAS5828)) {
 		ret = hw_codec_init();
 		if (ret) {
 			LOG_ERR("Failed to initialize HW codec: %d", ret);

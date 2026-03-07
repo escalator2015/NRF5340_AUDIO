@@ -2,6 +2,10 @@
  * hw_codec implementation para TAS5828 (drop-in del CS47L63).
  * Implementa la API de src/modules/hw_codec.h.
  *
+ * Deteción automática en tiempo de ejecución:
+ *   - Si el TAS5828 responde al scan I2C inicial → control HW (I2C).
+ *   - Si no responde (sink de solo I2S) → control SW (escalado PCM).
+ *
  * Copyright (c) 2026
  * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
  */
@@ -11,49 +15,108 @@
 #include "zbus_common.h"
 #include "macros_common.h"
 
+#include <stdint.h>
 #include <zephyr/kernel.h>
 #include <zephyr/zbus/zbus.h>
+#include <zephyr/sys/util.h>   /* CLAMP */
 #include <zephyr/logging/log.h>
 
 LOG_MODULE_REGISTER(hw_codec_tas5828, CONFIG_HW_CODEC_TAS5828_LOG_LEVEL);
 
-/* Volumen actual en dB (0 = máximo, -64 = mínimo útil) */
-static int8_t current_vol_db = CONFIG_HW_CODEC_TAS5828_DEFAULT_VOL_DB;
-static bool   current_muted;
+/* ---------- Estado común ------------------------------------------------ */
 
-/* --- API hw_codec.h ---------------------------------------------------- */
+static bool tas5828_present; /* true si detectó por I2C en hw_codec_init() */
+
+/* Volumen en dB para la ruta HW */
+static int8_t hw_vol_db   = CONFIG_HW_CODEC_TAS5828_DEFAULT_VOL_DB;
+static bool   hw_muted;
+
+/*
+ * Gain SW en formato Q16 (0 – 65 536):
+ *   65 536 = ganancia 1.0 = 0 dB (volúmen máximo)
+ *       0 = silencio
+ *
+ * Escala lineal mapeada desde el rango 0-128 de hw_codec_volume_set():
+ *   set_val=128 → sw_gain_q16=65 536 (0 dB)
+ *   set_val=64  → sw_gain_q16=32 768 (-6 dB aprox.)
+ *   set_val=0   → sw_gain_q16=0    (silencio)
+ */
+static uint32_t sw_gain_q16 = 65536u; /* volúmen máximo al arrancar */
+static bool     sw_muted;
+static uint32_t sw_gain_before_mute = 65536u;
+
+/* ---------- Ayudas internas -------------------------------------------- */
+
+/*
+ * Mapea set_val (0-128) a Q16:
+ *   Q16 = set_val * 512  (= set_val * 65536 / 128)
+ */
+static inline uint32_t set_val_to_q16(uint8_t set_val)
+{
+	return (uint32_t)set_val * 512u;
+}
+
+/*
+ * Aplica +3 dB o -3 dB sobre el gain Q16 actual.
+ * ±3 dB ≡ factor ×1.413 / ×0.708 en lineal.
+ * Aproximación entera:
+ *   +3 dB: gain = (gain * 92682) >> 16   (92682/65536 ≈ 1.414)
+ *   -3 dB: gain = (gain * 46341) >> 16   (46341/65536 ≈ 0.707)
+ */
+static void sw_gain_step(int8_t dir)
+{
+	if (dir > 0) {
+		sw_gain_q16 = MIN(65536u, (sw_gain_q16 * 92682u) >> 16);
+	} else {
+		sw_gain_q16 = (sw_gain_q16 * 46341u) >> 16;
+	}
+}
+
+/* ---------- API hw_codec.h --------------------------------------------- */
 
 int hw_codec_volume_set(uint8_t set_val)
 {
-	/* set_val: rango 0-128 (igual que el CS47L63).
-	 * Conversión: db = (set_val / 2) - 64
-	 * 128 → 0dB, 0 → -64dB
-	 */
-	int8_t db = (int8_t)((int16_t)set_val / 2 - 64);
+	if (tas5828_present) {
+		/* set_val rango 0-128: mapeo a dB: db = set_val/2 - 64 */
+		hw_vol_db = (int8_t)((int16_t)set_val / 2 - 64);
+		hw_muted = false;
+		return tas5828_volume_set_db(hw_vol_db);
+	}
 
-	current_vol_db = db;
-	current_muted = false;
-	return tas5828_volume_set_db(db);
+	/* Ruta SW */
+	sw_gain_q16 = set_val_to_q16(set_val);
+	sw_muted = false;
+	LOG_DBG("SW vol set %u (Q16=%u)", set_val, sw_gain_q16);
+	return 0;
 }
 
 int hw_codec_volume_adjust(int8_t adjustment)
 {
-	if (adjustment == 0) {
-		/* Re-aplicar valor conocido */
-		return tas5828_volume_set_db(current_vol_db);
+	if (tas5828_present) {
+		if (adjustment == 0) {
+			return tas5828_volume_set_db(hw_vol_db);
+		}
+		int16_t new_db = (int16_t)hw_vol_db + adjustment;
+
+		new_db = CLAMP(new_db, -64, 0);
+		hw_vol_db = (int8_t)new_db;
+		hw_muted = false;
+		return tas5828_volume_set_db(hw_vol_db);
 	}
 
-	int16_t new_db = (int16_t)current_vol_db + adjustment;
-
-	if (new_db > 0) {
-		new_db = 0;
-	} else if (new_db < -64) {
-		new_db = -64;
+	/* Ruta SW */
+	if (adjustment > 0) {
+		for (int i = 0; i < adjustment / 3; i++) {
+			sw_gain_step(1);
+		}
+	} else {
+		for (int i = 0; i < (-adjustment) / 3; i++) {
+			sw_gain_step(-1);
+		}
 	}
-
-	current_vol_db = (int8_t)new_db;
-	current_muted = false;
-	return tas5828_volume_set_db(current_vol_db);
+	sw_muted = false;
+	LOG_DBG("SW vol adjust %d → Q16=%u", adjustment, sw_gain_q16);
+	return 0;
 }
 
 int hw_codec_volume_decrease(void)
@@ -68,25 +131,46 @@ int hw_codec_volume_increase(void)
 
 int hw_codec_volume_mute(void)
 {
-	current_muted = true;
-	return tas5828_mute(true);
+	if (tas5828_present) {
+		hw_muted = true;
+		return tas5828_mute(true);
+	}
+
+	/* Ruta SW */
+	if (!sw_muted) {
+		sw_gain_before_mute = sw_gain_q16;
+		sw_gain_q16 = 0u;
+		sw_muted = true;
+		LOG_DBG("SW mute");
+	}
+	return 0;
 }
 
 int hw_codec_volume_unmute(void)
 {
-	current_muted = false;
-	return tas5828_mute(false);
+	if (tas5828_present) {
+		hw_muted = false;
+		return tas5828_mute(false);
+	}
+
+	/* Ruta SW */
+	if (sw_muted) {
+		sw_gain_q16 = sw_gain_before_mute;
+		sw_muted = false;
+		LOG_DBG("SW unmute");
+	}
+	return 0;
 }
 
 int hw_codec_default_conf_enable(void)
 {
-	/* No hay configuración extra necesaria en el TAS5828 para I2S puro */
+	/* Sin configuración extra para I2S puro */
 	return 0;
 }
 
 int hw_codec_soft_reset(void)
 {
-	/* No implementado: el TAS5828 se resetea con su pin nRESET o power-cycle */
+	/* El TAS5828 se resetea con nRESET o power-cycle */
 	return 0;
 }
 
@@ -94,29 +178,80 @@ int hw_codec_init(void)
 {
 	int ret;
 
-	ret = tas5828_init();
-	if (ret) {
-		LOG_ERR("TAS5828 init failed: %d", ret);
-		return ret;
+	/* ---- Scan I2C: detectar si hay TAS5828 físicamente ---- */
+	ret = tas5828_probe();
+	if (ret == 0) {
+		/* TAS5828 presente: iniciálisarlo vía I2C */
+		tas5828_present = true;
+
+		ret = tas5828_init();
+		if (ret) {
+			LOG_ERR("TAS5828 init I2C fallido: %d", ret);
+			return ret;
+		}
+
+		ret = tas5828_volume_set_db(hw_vol_db);
+		if (ret) {
+			return ret;
+		}
+
+		ret = tas5828_mute(hw_muted);
+		if (ret) {
+			return ret;
+		}
+
+		LOG_INF("hw_codec: TAS5828 HW (I2C), vol=%ddB muted=%d",
+			hw_vol_db, hw_muted);
+	} else {
+		/* Sin TAS5828: desactivar I2C y usar control SW */
+		tas5828_present = false;
+		sw_gain_q16 = 65536u; /* volúmen máximo */
+		sw_muted    = false;
+
+		LOG_INF("hw_codec: TAS5828 ausente → control de volumen por SOFTWARE (PCM scaling)");
 	}
 
-	/* Aplicar volumen y mute por defecto */
-	ret = tas5828_volume_set_db(current_vol_db);
-	if (ret) {
-		return ret;
-	}
-
-	ret = tas5828_mute(current_muted);
-	if (ret) {
-		return ret;
-	}
-
-	LOG_INF("hw_codec TAS5828 ready, vol=%ddB muted=%d",
-		current_vol_db, current_muted);
 	return 0;
 }
 
-/* --- Subscriber zbus para VOLUME_* ------------------------------------- */
+/* ---------- Aplicación de gain SW sobre buffer PCM -------------------- */
+
+void hw_codec_sw_vol_apply(void *buf, uint32_t num_samps)
+{
+	/* Si hay amplificador HW, el nivel lo controla el TAS5828 — no hacer nada */
+	if (tas5828_present) {
+		return;
+	}
+
+	uint32_t gain = sw_muted ? 0u : sw_gain_q16;
+
+	if (gain == 65536u) {
+		/* Volumen máximo: no modificar muestras */
+		return;
+	}
+
+#if CONFIG_AUDIO_BIT_DEPTH_OCTETS == 2
+	/* Muestras PCM 16-bit */
+	int16_t *s = (int16_t *)buf;
+
+	for (uint32_t i = 0; i < num_samps; i++) {
+		int32_t scaled = ((int32_t)s[i] * (int32_t)gain) >> 16;
+
+		s[i] = (int16_t)CLAMP(scaled, INT16_MIN, INT16_MAX);
+	}
+#else
+	/* Muestras PCM 24/32-bit (en contenedor int32_t) */
+	int32_t *s = (int32_t *)buf;
+
+	for (uint32_t i = 0; i < num_samps; i++) {
+		int64_t scaled = ((int64_t)s[i] * (int64_t)gain) >> 16;
+
+		s[i] = (int32_t)CLAMP(scaled, INT32_MIN, INT32_MAX);
+	}
+#endif
+}
+
+/* ---------- Subscriber zbus para VOLUME_* ------------------------------ */
 
 ZBUS_SUBSCRIBER_DEFINE(volume_evt_sub, CONFIG_HW_CODEC_TAS5828_VOLUME_SUB_QUEUE_SIZE);
 

@@ -26,6 +26,9 @@
 #include "audio_system.h"
 #include "streamctrl.h"
 #include "sd_card_playback.h"
+#if defined(CONFIG_HW_CODEC_TAS5828)
+#include "hw_codec.h"
+#endif
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(audio_datapath, CONFIG_AUDIO_DATAPATH_LOG_LEVEL);
@@ -730,6 +733,12 @@ static void audio_datapath_i2s_blk_complete(uint32_t frame_start_ts_us, uint32_t
 		if (tone_active) {
 			tone_mix(tx_buf);
 		}
+
+#if defined(CONFIG_HW_CODEC_TAS5828)
+		/* Volumen SW: escala PCM cuando no hay TAS5828 físico.
+		 * Si el TAS5828 fue detectado, la función retorna inmediatamente. */
+		hw_codec_sw_vol_apply(tx_buf, BLK_MULTI_CHAN_NUM_SAMPS);
+#endif
 	}
 
 	/********** I2S RX **********/

@@ -56,6 +56,26 @@ if [ -n "$NRFUTIL_DEVICE" ]; then
     echo "Dispositivos conectados:"
     "$NRFUTIL_DEVICE" list 2>/dev/null || true
     echo ""
+    # --- Recover: desbloquear readback protection si está activa ---------------
+    echo -e "${YELLOW}[0/2] Recover (desbloquear protección si existe)...${NC}"
+    if "$NRFUTIL_DEVICE" recover \
+            --serial-number "$JLINK_SNR" \
+            --core Application 2>&1 | tee /tmp/recover_app.log; then
+        echo -e "${GREEN}✓ Application core recuperado (o ya estaba desbloqueado)${NC}"
+    else
+        # Ignorar si ya estaba desbloqueado (exit code no-zero pero mensaje OK)
+        grep -qi "already\|success\|done\|no protection" /tmp/recover_app.log && \
+            echo -e "${GREEN}✓ Application core ya desbloqueado${NC}" || \
+            echo -e "${YELLOW}AVISO: recover App core devolvió error (continúa de todas formas)${NC}"
+    fi
+    "$NRFUTIL_DEVICE" recover \
+        --serial-number "$JLINK_SNR" \
+        --core Network 2>/dev/null && \
+        echo -e "${GREEN}✓ Network core recuperado${NC}" || \
+        echo -e "${YELLOW}AVISO: recover Net core (ignorado)${NC}"
+    echo ""
+
+    # --- Flash Application core ------------------------------------------------
     echo -e "${YELLOW}[1/2] Flasheando Application core...${NC}"
     "$NRFUTIL_DEVICE" program \
         --firmware "$HEX_FILE" \

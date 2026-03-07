@@ -93,4 +93,17 @@ int hw_codec_soft_reset(void);
  */
 int hw_codec_init(void);
 
+#if defined(CONFIG_HW_CODEC_TAS5828)
+/**
+ * @brief Aplica el volumen por software al buffer PCM.
+ *
+ * Se usa cuando el TAS5828 no está físicamente conectado. Si el TAS5828
+ * fue detectado en el probe, la función retorna inmediatamente (no-op).
+ *
+ * @param buf        Buffer de muestras PCM (int16_t o int32_t según bit depth).
+ * @param num_samps  Número total de muestras (todos los canales).
+ */
+void hw_codec_sw_vol_apply(void *buf, uint32_t num_samps);
+#endif /* CONFIG_HW_CODEC_TAS5828 */
+
 #endif /* _HW_CODEC_H_ */

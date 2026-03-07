@@ -45,6 +45,26 @@ static int tas5828_reg_read(uint8_t reg, uint8_t *val)
 	return ret;
 }
 
+int tas5828_probe(void)
+{
+	if (!device_is_ready(tas5828_dev.bus)) {
+		LOG_WRN("I2C bus not ready — TAS5828 absent");
+		return -ENODEV;
+	}
+
+	/* Intentar leer DEVICE_CTRL_2 (0x03). Un ACK confirma presencia. */
+	uint8_t reg = TAS5828_REG_DEVICE_CTRL2;
+	uint8_t val;
+	int ret = i2c_write_read_dt(&tas5828_dev, &reg, 1, &val, 1);
+
+	if (ret) {
+		LOG_WRN("TAS5828 no responde en scan I2C (ret=%d) → modo I2S puro", ret);
+	} else {
+		LOG_INF("TAS5828 detectado en I2C (CTRL2=0x%02x)", val);
+	}
+	return ret;
+}
+
 int tas5828_init(void)
 {
 	if (!device_is_ready(tas5828_dev.bus)) {

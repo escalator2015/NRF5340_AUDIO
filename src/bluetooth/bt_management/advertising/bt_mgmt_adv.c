@@ -411,7 +411,8 @@ int bt_mgmt_adv_start(uint8_t ext_adv_index, const struct bt_data *adv, size_t a
 	/* Special case for restarting advertising */
 	if (adv == NULL && adv_size == 0 && per_adv == NULL && per_adv_size == 0) {
 		if (adv_local[ext_adv_index] == NULL) {
-			LOG_ERR("No valid advertising data stored");
+			/* PERIPHERAL role not yet configured — caller must handle -ENOENT */
+			LOG_DBG("No valid advertising data stored for index %u", ext_adv_index);
 			return -ENOENT;
 		}
 

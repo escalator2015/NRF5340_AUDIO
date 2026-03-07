@@ -23,6 +23,12 @@
 #include "le_audio_rx.h"
 #include "fw_info_app.h"
 
+#if defined(CONFIG_BT_CENTRAL)
+/* Necesario para bt_le_per_adv_sync_get_info + bt_conn_le_create */
+#include <zephyr/bluetooth/bluetooth.h>
+#include <zephyr/bluetooth/conn.h>
+#endif
+
 #if defined(CONFIG_CTRL_SERVICE)
 #include "ctrl_service.h"
 #include "ctrl_service_uuids.h"
@@ -42,6 +48,14 @@ struct ble_iso_data {
 } __packed;
 
 static uint32_t last_broadcast_id = BRDCAST_ID_NOT_USED;
+
+#if defined(CONFIG_BT_CENTRAL)
+/* Dirección BLE del source capturada en BT_MGMT_PA_SYNCED.
+ * El sink la usa para iniciar conexión ACL al source (como Central)
+ * una vez que el BIG ISO está establecido y el audio fluye. */
+static bt_addr_le_t src_ble_addr;
+static atomic_t     src_ble_addr_ready = ATOMIC_INIT(0);
+#endif
 
 ZBUS_SUBSCRIBER_DEFINE(button_evt_sub, CONFIG_BUTTON_MSG_SUB_QUEUE_SIZE);
 
@@ -141,6 +155,35 @@ static void le_audio_msg_sub_thread(void)
 			stream_state_set(STATE_STREAMING);
 			ret = led_blink(LED_AUDIO_CONN_STATUS);
 			ERR_CHK(ret);
+
+#if defined(CONFIG_BT_CENTRAL)
+			/*
+			 * BIG ISO establecido: ahora el radio BLE puede coexistir con
+			 * conexiones ACL (BIG SYNC RECEIVER ≠ BROADCASTER). Conectar al source.
+			 */
+			if (atomic_cas(&src_ble_addr_ready, 1, 0)) {
+				static const struct bt_conn_le_create_param cp =
+					BT_CONN_LE_CREATE_PARAM_INIT(
+						BT_CONN_LE_OPT_NONE,
+						BT_GAP_SCAN_FAST_INTERVAL,
+						BT_GAP_SCAN_FAST_INTERVAL);
+				static const struct bt_le_conn_param lp =
+					BT_LE_CONN_PARAM_INIT(
+						BT_GAP_INIT_CONN_INT_MIN,
+						BT_GAP_INIT_CONN_INT_MAX,
+						0, 400);
+				struct bt_conn *acl_conn = NULL;
+				int r = bt_conn_le_create(&src_ble_addr, &cp, &lp, &acl_conn);
+
+				if (r == 0) {
+					bt_conn_unref(acl_conn);
+					LOG_INF("ACL al source: conexión iniciada");
+				} else {
+					LOG_ERR("bt_conn_le_create al source falló: %d", r);
+					atomic_set(&src_ble_addr_ready, 1); /* reintentar */
+				}
+			}
+#endif
 
 			break;
 
@@ -280,6 +323,19 @@ static void bt_mgmt_msg_sub_thread(void)
 				LOG_WRN("Failed to set PA sync");
 			} else {
 				last_broadcast_id = msg.broadcast_id;
+#if defined(CONFIG_BT_CENTRAL)
+				/* Capturar dirección del source para conexión ACL posterior */
+				struct bt_le_per_adv_sync_info sync_info;
+
+				if (bt_le_per_adv_sync_get_info(msg.pa_sync, &sync_info) == 0) {
+					bt_addr_le_copy(&src_ble_addr, &sync_info.addr);
+					atomic_set(&src_ble_addr_ready, 1);
+					char addr_buf[BT_ADDR_LE_STR_LEN];
+
+					bt_addr_le_to_str(&src_ble_addr, addr_buf, sizeof(addr_buf));
+					LOG_INF("Source addr: %s (ACL pending BIG sync)", addr_buf);
+				}
+#endif
 			}
 
 			break;
@@ -517,11 +573,6 @@ int main(void)
 	ret = bt_mgmt_init();
 	ERR_CHK(ret);
 
-#if defined(CONFIG_CTRL_SERVICE)
-	ret = ctrl_service_init();
-	ERR_CHK_MSG(ret, "Failed to initialize ACS control service");
-#endif
-
 	ret = audio_system_init();
 	ERR_CHK(ret);
 
@@ -530,6 +581,14 @@ int main(void)
 
 	ret = zbus_link_producers_observers();
 	ERR_CHK_MSG(ret, "Failed to link zbus producers and observers");
+
+#if defined(CONFIG_CTRL_SERVICE)
+	/* ctrl_service_init publica el volumen NVS a zbus — debe ir DESPUÉS
+	 * de zbus_link_producers_observers para que volume_evt_sub lo reciba
+	 * y el hw_codec aplique el nivel guardado al arrancar. */
+	ret = ctrl_service_init();
+	ERR_CHK_MSG(ret, "Failed to initialize ACS control service");
+#endif
 
 	ret = le_audio_rx_init();
 	ERR_CHK_MSG(ret, "Failed to initialize rx path");

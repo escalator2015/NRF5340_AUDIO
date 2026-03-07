@@ -84,7 +84,9 @@ static void connected_cb(struct bt_conn *conn, uint8_t err)
 				(void *)conn, err, bt_hci_err_to_str(err));
 		}
 
-		bt_conn_unref(conn);
+		/* Caller ref was already released in bt_conn_le_create call site;
+		 * do NOT unref here (double-free → assertion in conn.c).
+		 */
 
 		if (IS_ENABLED(CONFIG_BT_CENTRAL)) {
 			ret = bt_mgmt_scan_start(0, 0, BT_MGMT_SCAN_TYPE_CONN, NULL,
@@ -96,7 +98,11 @@ static void connected_cb(struct bt_conn *conn, uint8_t err)
 
 		if (IS_ENABLED(CONFIG_BT_PERIPHERAL)) {
 			ret = bt_mgmt_adv_start(0, NULL, 0, NULL, 0, true);
-			if (ret) {
+			/* -ENOENT means PERIPHERAL role not yet initialized (no adv data
+			 * registered). This is normal when ACL times out before the first
+			 * advertising set is configured - silently ignore.
+			 */
+			if (ret && ret != -ENOENT) {
 				LOG_ERR("Failed to restart advertising: %d", ret);
 			}
 		}
@@ -135,9 +141,9 @@ static void disconnected_cb(struct bt_conn *conn, uint8_t reason)
 	/* NOTE: The string below is used by the Nordic CI system */
 	LOG_INF("Disconnected: %s, reason 0x%02x %s", addr, reason, bt_hci_err_to_str(reason));
 
-	if (IS_ENABLED(CONFIG_BT_CENTRAL)) {
-		bt_conn_unref(conn);
-	}
+	/* Caller ref was already released in bt_conn_le_create call site;
+	 * do NOT unref here (double-free → assertion in conn.c).
+	 */
 
 	/* Publish disconnected */
 	msg.event = BT_MGMT_DISCONNECTED;
@@ -148,7 +154,10 @@ static void disconnected_cb(struct bt_conn *conn, uint8_t reason)
 
 	if (IS_ENABLED(CONFIG_BT_PERIPHERAL)) {
 		ret = bt_mgmt_adv_start(0, NULL, 0, NULL, 0, true);
-		ERR_CHK(ret);
+		/* -ENOENT: PERIPHERAL role not yet configured — not an error */
+		if (ret && ret != -ENOENT) {
+			ERR_CHK(ret);
+		}
 	}
 
 	/* The mutex for preventing the racing condition if two headset disconnected too close,

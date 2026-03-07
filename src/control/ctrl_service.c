@@ -20,6 +20,7 @@
 #include <zephyr/bluetooth/gatt.h>
 #include <zephyr/bluetooth/uuid.h>
 #include <zephyr/zbus/zbus.h>
+#include <zephyr/bluetooth/conn.h>
 #include <zephyr/logging/log.h>
 
 LOG_MODULE_REGISTER(ctrl_service, CONFIG_CTRL_SERVICE_LOG_LEVEL);
@@ -35,6 +36,34 @@ static struct bt_conn *acs_conn;
 
 /* Buffer de respuesta JSON */
 static uint8_t rsp_buf[ACS_JSON_MAX_LEN];
+
+/* --- bt_conn callbacks — fix bt_conn_ref para bt_mgmt --------------------
+ *
+ * bt_mgmt.c::disconnected_cb hace bt_conn_unref(conn) cuando
+ * CONFIG_BT_CENTRAL=y, asumiendo que TODA conexión fue outgoing
+ * (bt_conn_le_create entregó +1 ref). Las conexiones entrantes al sink
+ * (el source conecta a nosotros, nosotros somos Peripheral) no tienen
+ * esa ref extra → unref lleva refcount a 0 → ASSERT [old > 0] @ conn.c.
+ * Solución: tomar la ref aquí para que bt_mgmt la consuma.
+ */
+static void ctrl_service_connected_cb(struct bt_conn *conn, uint8_t err)
+{
+	if (err) {
+		return;
+	}
+
+	struct bt_conn_info info;
+
+	if (bt_conn_get_info(conn, &info) == 0 &&
+	    info.role == BT_CONN_ROLE_PERIPHERAL) {
+		bt_conn_ref(conn); /* balancea bt_mgmt::disconnected_cb unref */
+		LOG_DBG("ctrl_service: ref extra tomada para conexión entrante");
+	}
+}
+
+BT_CONN_CB_DEFINE(ctrl_service_conn_cb) = {
+	.connected = ctrl_service_connected_cb,
+};
 
 /* --- Notificación al source -------------------------------------------- */
 

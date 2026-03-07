@@ -89,6 +89,9 @@ static void bond_connect(const struct bt_bond_info *bond_info, void *user_data)
 			if (ret) {
 				LOG_ERR("Failed to restart scanning: %d", ret);
 			}
+		} else {
+			/* Drop caller ref immediately; stack manages connection lifetime */
+			bt_conn_unref(conn);
 		}
 	}
 }
@@ -176,6 +179,9 @@ static bool device_name_check(struct bt_data *data, void *user_data)
 				if (ret) {
 					LOG_ERR("Failed to restart scanning: %d", ret);
 				}
+			} else {
+				/* Drop caller ref immediately; stack manages connection lifetime */
+				bt_conn_unref(conn);
 			}
 
 			return false;
@@ -244,6 +250,9 @@ static bool addr_check(struct bt_data *data, void *user_data)
 			if (ret) {
 				LOG_ERR("Failed to restart scanning: %d", ret);
 			}
+		} else {
+			/* Drop caller ref immediately; stack manages connection lifetime */
+			bt_conn_unref(conn);
 		}
 
 		return false;
@@ -302,6 +311,9 @@ static bool csip_found(struct bt_data *data, void *user_data)
 		if (ret) {
 			LOG_ERR("Failed to restart scanning: %d", ret);
 		}
+	} else {
+		/* Drop caller ref immediately; stack manages connection lifetime */
+		bt_conn_unref(conn);
 	}
 
 	/* Set member found and connected, stop parsing */

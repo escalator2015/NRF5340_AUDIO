@@ -16,9 +16,10 @@
 #include "macros_common.h"
 
 #include <stdint.h>
+#include <math.h>              /* powf */
 #include <zephyr/kernel.h>
 #include <zephyr/zbus/zbus.h>
-#include <zephyr/sys/util.h>   /* CLAMP */
+#include <zephyr/sys/util.h>   /* CLAMP, MIN */
 #include <zephyr/logging/log.h>
 
 LOG_MODULE_REGISTER(hw_codec_tas5828, CONFIG_HW_CODEC_TAS5828_LOG_LEVEL);
@@ -48,12 +49,25 @@ static uint32_t sw_gain_before_mute = 65536u;
 /* ---------- Ayudas internas -------------------------------------------- */
 
 /*
- * Mapea set_val (0-128) a Q16:
- *   Q16 = set_val * 512  (= set_val * 65536 / 128)
+ * Convierte hw_val (0-128) a ganancia Q16 (0-65536) con escala dB correcta.
+ *
+ * hw_val=128 → dB=  0 → gain=1.000 → Q16=65536
+ * hw_val= 98 → dB=-15 → gain=0.178 → Q16=11654
+ * hw_val= 68 → dB=-30 → gain=0.032 → Q16= 2072
+ * hw_val=  0 → silencio → Q16=0
+ *
+ * Relación: dB = hw_val/2 - 64  →  gain = 10^(dB/20)
  */
-static inline uint32_t set_val_to_q16(uint8_t set_val)
+static uint32_t set_val_to_q16(uint8_t set_val)
 {
-	return (uint32_t)set_val * 512u;
+	if (set_val == 0) {
+		return 0u;
+	}
+	float db   = (float)set_val * 0.5f - 64.0f;
+	float gain = powf(10.0f, db / 20.0f);
+	uint32_t q16 = (uint32_t)(gain * 65536.0f + 0.5f);
+
+	return MIN(q16, 65536u);
 }
 
 /*

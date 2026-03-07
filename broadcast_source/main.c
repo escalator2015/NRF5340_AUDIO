@@ -26,6 +26,10 @@
 #include "ctrl_central.h"
 #endif
 
+#if defined(CONFIG_USB_SERIAL_CTRL)
+#include "usb_serial_ctrl.h"
+#endif
+
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(main, CONFIG_MAIN_LOG_LEVEL);
 
@@ -550,6 +554,14 @@ int main(void)
 #if defined(CONFIG_CTRL_CENTRAL)
 	ret = ctrl_central_init();
 	ERR_CHK_MSG(ret, "Failed to initialize ACS central");
+
+	/* Arranca el adv ACL con 3s de delay (tras BIG ISO): fire-and-forget */
+	(void)ctrl_central_adv_start();
+#endif
+
+#if defined(CONFIG_USB_SERIAL_CTRL)
+	ret = usb_serial_ctrl_init();
+	ERR_CHK_MSG(ret, "Failed to initialize USB serial ctrl");
 #endif
 
 	ret = audio_system_init();

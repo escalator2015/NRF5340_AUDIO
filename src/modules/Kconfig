@@ -90,7 +90,22 @@ module = MODULE_NRF5340_AUDIO_DK
 module-str = module-nrf5340-audio_dk
 source "subsys/logging/Kconfig.template.log_config"
 
+module = USB_SERIAL_CTRL
+module-str = usb-serial-ctrl
+source "subsys/logging/Kconfig.template.log_config"
+
 endmenu # Log levels
+
+#----------------------------------------------------------------------------#
+config USB_SERIAL_CTRL
+	bool "USB CDC-ACM JSON control channel (WebSerial)"
+	depends on USB_CDC_ACM && USB_COMPOSITE_DEVICE && CTRL_CENTRAL
+	default n
+	help
+	  Adds a second USB CDC-ACM port that exposes a JSON+newline
+	  control protocol compatible with the WebSerial browser API.
+	  Allows a web page to list sinks and send set_vol / set_mute /
+	  set_name / get_info commands to the Auracast receivers.
 
 #----------------------------------------------------------------------------#
 menu "Thread priorities"

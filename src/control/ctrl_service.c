@@ -93,7 +93,7 @@ static void acs_notify(const char *json)
 	int ret = bt_gatt_notify(acs_conn, &acs_svc.attrs[ACS_EVT_VALUE_ATTR_IDX],
 				 json, len);
 
-	if (ret && ret != -ENOTCONN) {
+	if (ret && ret != -ENOTCONN && ret != -EINVAL) {
 		LOG_WRN("ACS notify failed: %d", ret);
 	}
 }
@@ -123,15 +123,16 @@ ZBUS_CHAN_DECLARE(volume_chan);
 
 static void publish_volume_set(uint8_t hw_val)
 {
-	struct volume_msg msg = {
-		.event  = VOLUME_SET,
-		.volume = hw_val,
-	};
-	int ret = zbus_chan_pub(&volume_chan, &msg, K_MSEC(100));
+        LOG_DBG("publish_volume_set: hw_val=%u", hw_val);
+        struct volume_msg msg = {
+                .event  = VOLUME_SET,
+                .volume = hw_val,
+        };
+        int ret = zbus_chan_pub(&volume_chan, &msg, K_MSEC(100));
 
-	if (ret) {
-		LOG_WRN("Failed to publish volume: %d", ret);
-	}
+        if (ret) {
+                LOG_WRN("Failed to publish volume: %d", ret);
+        }
 }
 
 static void publish_mute(bool muted)
@@ -341,6 +342,7 @@ static ssize_t acs_cmd_write(struct bt_conn *conn,
 	ARG_UNUSED(offset);
 	ARG_UNUSED(flags);
 
+	LOG_DBG("acs_cmd_write: len=%u", len);
 	acs_conn = conn;
 	dispatch_cmd((const char *)buf, len);
 	return len;

@@ -250,9 +250,12 @@ static void dispatch(char *line)
 	char cmd[32];
 
 	if (!json_get_str(line, "cmd", cmd, sizeof(cmd))) {
+		LOG_WRN("dispatch: no 'cmd' field in: %s", line);
 		cdc_send("{\"ok\":false,\"err\":\"missing cmd\"}");
 		return;
 	}
+
+	LOG_DBG("CMD: %s", cmd);
 
 	/* ---- list_sinks ---- */
 	if (strcmp(cmd, "list_sinks") == 0) {
@@ -264,6 +267,7 @@ static void dispatch(char *line)
 	int sink_idx = json_get_int(line, "sink", -1);
 
 	if (sink_idx < 0 || sink_idx >= CTRL_CENTRAL_MAX_SINKS) {
+		LOG_WRN("dispatch: invalid sink idx=%d for cmd=%s", sink_idx, cmd);
 		cdc_send("{\"ok\":false,\"err\":\"missing or invalid sink index\"}");
 		return;
 	}
@@ -278,11 +282,14 @@ static void dispatch(char *line)
 	} else if (strcmp(cmd, "set_vol") == 0) {
 		int db = json_get_int(line, "db", INT32_MIN);
 
+		LOG_DBG("set_vol: sink=%d db=%d", sink_idx, db);
 		if (db == INT32_MIN || db > 0 || db < -64) {
+			LOG_WRN("set_vol: db=%d out of range", db);
 			cdc_send("{\"ok\":false,\"err\":\"db out of range [0..-64]\"}");
 			return;
 		}
 		ret = ctrl_central_set_vol_db((uint8_t)sink_idx, (int8_t)db);
+		LOG_DBG("ctrl_central_set_vol_db ret=%d", ret);
 
 	/* ---- set_mute ---- */
 	} else if (strcmp(cmd, "set_mute") == 0) {

@@ -90,6 +90,7 @@ static void sw_gain_step(int8_t dir)
 
 int hw_codec_volume_set(uint8_t set_val)
 {
+	LOG_DBG("hw_codec_volume_set: set_val=%u tas5828_present=%d", set_val, (int)tas5828_present);
 	if (tas5828_present) {
 		/* set_val rango 0-128: mapeo a dB: db = set_val/2 - 64 */
 		hw_vol_db = (int8_t)((int16_t)set_val / 2 - 64);
@@ -301,6 +302,7 @@ static void volume_msg_sub_thread(void)
 			break;
 
 		case VOLUME_SET:
+			LOG_DBG("volume_sub: VOLUME_SET hw_val=%u", msg.volume);
 			ret = hw_codec_volume_set(msg.volume);
 			if (ret) {
 				LOG_WRN("Volume set failed: %d", ret);

@@ -1,0 +1,10 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "build source incremental + flash",
+			"type": "shell",
+			"command": "source ~/ncs/v3.2.2/zephyr/zephyr-env.sh && ./build.sh -s -f"
+		}
+	]
+}

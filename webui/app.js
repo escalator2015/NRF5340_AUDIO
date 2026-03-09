@@ -76,7 +76,9 @@ class SerialController {
     if (!this.connected) {
       throw new Error('Puerto no conectado');
     }
-    await this.writer.write(JSON.stringify(obj) + '\n');
+    const line = JSON.stringify(obj) + '\n';
+    console.log('[serial TX]', line.trim());
+    await this.writer.write(line);
   }
 
   /* --- bucle de lectura de líneas -------------------------------- */
@@ -98,11 +100,12 @@ class SerialController {
         for (const raw of lines) {
           const line = raw.replace(/\r/g, '').trim();
           if (!line) continue;
+          console.log('[serial RX]', line);
           try {
             const msg = JSON.parse(line);
             if (this.onMessage) this.onMessage(msg);
           } catch (e) {
-            console.warn('JSON parse error:', line, e);
+            console.warn('[serial RX] JSON parse error:', line, e);
           }
         }
       }
@@ -347,17 +350,20 @@ class App {
 
   /* --- Mensajes recibidos --------------------------------------- */
   _onMessage(msg) {
+    console.log('[msg]', JSON.stringify(msg));
     if (msg.sinks !== undefined) {
       /* Respuesta a list_sinks */
       this.sinks = msg.sinks;
+      console.log(`[msg] sinks count=${msg.sinks.length}`, msg.sinks.map(s => `${s.idx}:${s.vol_db}dB(${s.state})`));
       this._showState(this.sinks.length === 0 ? 'empty' : 'grid');
       this.ui.render(this.sinks);
       return;
     }
 
     if (msg.ok === true) {
-      /* ACK genérico de un comando → re-list para refrescar estado */
-      this._listSinks();
+      /* ACK genérico de un comando → re-list silencioso (sin ocultar el grid
+       * para que el slider no desaparezca mientras se espera la respuesta) */
+      this._listSinks(false);
       return;
     }
 
@@ -380,8 +386,11 @@ class App {
     }
   }
 
-  async _listSinks() {
-    this._showState('loading');
+  async _listSinks(showLoader = true) {
+    console.log(`[listSinks] showLoader=${showLoader}`);
+    if (showLoader) {
+      this._showState('loading');
+    }
     await this._sendCmd({ cmd: 'list_sinks' });
   }
 
@@ -391,10 +400,12 @@ class App {
     const idx = parseInt(col.dataset.sinkIdx, 10);
     const db  = parseInt(slider.value, 10);
 
+    console.log(`[vol] input sink=${idx} db=${db} slider.disabled=${slider.disabled}`);
     col.querySelector('.sink-vol-text').textContent = `${db} dB`;
 
     clearTimeout(this._volTimers[idx]);
     this._volTimers[idx] = setTimeout(() => {
+      console.log(`[vol] debounce fired → set_vol sink=${idx} db=${db}`);
       this._sendCmd({ cmd: 'set_vol', sink: idx, db });
     }, 300);
   }

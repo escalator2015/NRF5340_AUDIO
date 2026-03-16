@@ -14,7 +14,7 @@ HEX_CPUNET="${BUILD_DIR}/merged_CPUNET.hex"
 # nrfutil-device: buscar el que tenga plugin-probe-worker funcional
 find_nrfutil_device() {
     local candidates=(
-        "/home/aa/.vscode/extensions/nordic-semiconductor.nrf-connect-2026.1.1327-linux-x64/platform/nrfutil/bin/nrfutil-device"
+        "/home/aa/.vscode/extensions/nordic-semiconductor.nrf-connect-2026.3.1484-linux-x64/platform/nrfutil/bin/nrfutil-device"
         "/home/aa/.config/nrfconnect/nrfutil-sandboxes/8.1.1/device/2.15.7/bin/nrfutil-device"
         "/home/aa/.config/nrfconnect/nrfutil-sandboxes/device/2.15.7/bin/nrfutil-device"
         "/home/aa/.config/nrfconnect/nrfutil-sandboxes/device/2.15.2/bin/nrfutil-device"

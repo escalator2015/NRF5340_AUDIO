@@ -15,16 +15,3 @@
 		hp-channel-r;
 	};
 };
-
-/*
- * CDC-ACM UART virtual — canal de control JSON para WebSerial.
- * Debe ir bajo el nodo del controlador USB (zephyr_udc0 / usbd).
- * Requerido para que CONFIG_USB_CDC_ACM se active.
- * Referenciado en usb_serial_ctrl.c: DEVICE_DT_GET(DT_NODELABEL(cdc_acm_uart1))
- */
-&zephyr_udc0 {
-	cdc_acm_uart1: cdc_acm_uart1 {
-		compatible = "zephyr,cdc-acm-uart";
-		/* sin hw-flow-control: WebSerial no gestiona RTS/CTS */
-	};
-};
